@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Bash: Run Current File",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "bash \"${file}\"",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}
