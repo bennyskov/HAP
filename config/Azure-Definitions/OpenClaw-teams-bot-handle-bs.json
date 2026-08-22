@@ -1,0 +1,57 @@
+{
+    "apiVersion": "2022-09-15",
+    "id": "/subscriptions/c492e693-7b9b-4321-86b8-db678e7ab90e/resourceGroups/openclaw-teams-bot-resource-group/providers/Microsoft.BotService/botServices/openclaw-teams-bot-handle-bs",
+    "name": "openclaw-teams-bot-handle-bs",
+    "type": "microsoft.botservice/botservices",
+    "sku": {
+        "name": "F0"
+    },
+    "kind": "azurebot",
+    "location": "global",
+    "zones": [],
+    "tags": {},
+    "properties": {
+        "displayName": "openclaw-teams-bot-handle-bs",
+        "description": null,
+        "iconUrl": "https://docs.botframework.com/static/devportal/client/images/bot-framework-default.png",
+        "endpoint": "",
+        "msaAppId": "83f8b0d1-dbaa-4d60-b66a-aed8ea5a7bad",
+        "msaAppTenantId": "f0e1d2c3-b4a5-6789-0fed-cba987654321",
+        "msaAppType": "SingleTenant",
+        "msaAppMSIResourceId": "",
+        "developerAppInsightKey": null,
+        "developerAppInsightsApplicationId": null,
+        "luisAppIds": [],
+        "endpointVersion": "3.0",
+        "configuredChannels": [
+            "webchat",
+            "directline"
+        ],
+        "enabledChannels": [
+            "webchat",
+            "directline"
+        ],
+        "isDeveloperAppInsightsApiKeySet": false,
+        "isStreamingSupported": false,
+        "schemaTransformationVersion": "1.3",
+        "publishingCredentials": null,
+        "parameters": null,
+        "allSettings": null,
+        "manifestUrl": null,
+        "storageResourceId": null,
+        "tenantId": "e212c670-7add-4a4a-baaf-655d4772cd9e",
+        "migrationToken": null,
+        "isCmekEnabled": false,
+        "cmekKeyVaultUrl": null,
+        "openWithHint": "",
+        "appPasswordHint": "",
+        "botDefinition": null,
+        "mcsFederatedCredentialSubjectId": null,
+        "isAzureBotCreatedInMcsByAbs": false,
+        "publicNetworkAccess": null,
+        "disableLocalAuth": false,
+        "cmekEncryptionStatus": "Off",
+        "provisioningState": "Succeeded"
+    },
+    "etag": "\"1d00d503-0000-0d00-0000-69efad6e0000\""
+}

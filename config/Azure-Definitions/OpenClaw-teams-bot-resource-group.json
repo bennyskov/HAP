@@ -1,0 +1,9 @@
+{
+    "id": "/subscriptions/c492e693-7b9b-4321-86b8-db678e7ab90e/resourceGroups/openclaw-teams-bot-resource-group",
+    "name": "openclaw-teams-bot-resource-group",
+    "type": "Microsoft.Resources/resourceGroups",
+    "location": "denmarkeast",
+    "properties": {
+        "provisioningState": "Succeeded"
+    }
+}

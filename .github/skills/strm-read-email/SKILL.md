@@ -1,9 +1,25 @@
 ---
-name: strm-maintenance
-description: Use this skill for repeatable maintenance of the streaming infrastructure.
+name: strm-read-email
+description: Use this skill for repeatable maintenance of the streaming infrastructure and email handling.
 ---
 
 # Skill Instructions
+
+use the hermes agent to run this skill.
+
+# objective
+
+when a text message is received on WhatsApp @bs_code_bot like this:
+
+```text
+<user_name> <provider>
+example: Benny netflix
+```
+
+lookup the user_name in the `config/code-forward-destinations.csv` file, get the variable `forward_to` for the user_name, then
+lookup the provider in the `config/code-forward-providers.csv` file to get the `search_string` for the provider.
+
+then read the email from the provider and extract the code, or report a failure if the code cannot be found.
 
 ## Purpose
 
