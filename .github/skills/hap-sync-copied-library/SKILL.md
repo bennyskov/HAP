@@ -105,7 +105,7 @@ grep -RIlE 'sk-[A-Za-z0-9]|ghp_[A-Za-z0-9]|AIza[A-Za-z0-9_-]|OPENROUTER_API_KEY|
 Then remove the offending file(s), rewrite the branch, and push again:
 
 ```bash
-rm -f .github/notes/KEYS.md
+rm -f path/to/offending-file
 git checkout --orphan cleaned-main
 git rm -rf --cached .
 git add .

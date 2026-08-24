@@ -1,3 +1,8 @@
+---
+description: "Defines the HAP Copilot layout and operating standard."
+applyTo: "**/*"
+---
+
 # Copilot Standard for HAP
 
 ## Purpose
@@ -14,7 +19,6 @@ When creating or updating AI guidance, use this structure:
 - `.github/prompts/*.prompt.md` — reusable prompts
 - `.github/skills/*/SKILL.md` — reusable workflows and operating procedures
 - `.github/docs/*.document.md` — project documents and standards
-- `.github/notes/*.md` — notes and operational guidance
 
 ## Naming conventions
 
@@ -56,6 +60,6 @@ HAP uses a standards-aligned repo layout:
 2. Scoped guidance lives in `.github/instructions/`.
 3. Reusable operations live in `.github/skills/`.
 4. Reusable interaction modes live in `.github/chatmodes/`.
-5. Project notes and reference material live in `.github/notes/` and `.github/docs/`.
+5. Project documents and reference material live in `.github/docs/`.
 
 This keeps Copilot behavior clear, discoverable, and easier to maintain than ad hoc rules or hidden custom logic.

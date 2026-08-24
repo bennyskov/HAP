@@ -40,6 +40,7 @@ Use this skill when:
 
 Reload and align against these files when they exist:
 - `.github/copilot-instructions.md`
+- `.github/instructions/copilot-standard.instructions.md`
 - `.github/instructions/copilot-ignore.instructions.md`
 - `.github/instructions/copilot-coding.instructions.md`
 - `.github/instructions/copilot-security.instructions.md`
@@ -57,7 +58,6 @@ Also review the currently active file if the user already has one open and it is
    - `.github/chatmodes/`
    - `.github/docs/`
    - `.github/instructions/`
-   - `.github/notes/`
    - `.github/prompts/`
    - `.github/skills/`
 4. Check whether key referenced files still exist and note any stale references.

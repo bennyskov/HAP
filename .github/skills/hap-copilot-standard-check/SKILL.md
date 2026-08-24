@@ -26,6 +26,7 @@ Re-read the latest current files before giving a verdict:
 - `.github/prompts/*.prompt.md`
 - `.github/skills/*/SKILL.md`
 - `.github/docs/*.document.md`
+- `.github/instructions/copilot-standard.instructions.md`
 - repo-specific Copilot config files when they define behavior, such as `.github/chatmodes/custom_chatmode.json`
 
 ## **1.3 Check Flow**
@@ -60,4 +61,3 @@ Return:
 - Do not edit files unless explicitly asked
 - Do not treat archived content as current
 - Do not invent a standard that is not present in the repo
-

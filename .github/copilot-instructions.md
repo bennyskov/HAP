@@ -22,11 +22,11 @@ Use this structure for project guidance:
 
 - `.github/copilot-instructions.md` — repo-wide baseline instructions
 - `.github/instructions/*.instructions.md` — scoped rules for tasks and file types
+- `.github/instructions/copilot-standard.instructions.md` — standard Copilot layout and conventions
 - `.github/chatmodes/*.chatmode.md` — reusable chat modes
 - `.github/prompts/*.prompt.md` — repeatable task prompts
 - `.github/skills/*/SKILL.md` — reusable workflows and operating procedures
 - `.github/docs/*.document.md` — project documents and reference material
-- `.github/notes/*.md` — operational notes and working conventions
 
 ## Scope boundaries
 
@@ -40,7 +40,7 @@ Use this structure for project guidance:
 - Preserve project conventions over ad hoc formatting.
 - Prefer concise, concrete guidance over long speculation.
 - Use the active repo docs as the canonical source of intent.
-- Keep operational notes in `.github/notes/` when the guidance is project-specific and not a code change.
+- Read [`.github/instructions/copilot-standard.instructions.md`](/Users/bennyskov/Projects/HAP/.github/instructions/copilot-standard.instructions.md) when you need the HAP Copilot layout standard in one place.
 
 ## Coding expectations
 
