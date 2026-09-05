@@ -59,9 +59,10 @@ source /Users/bennyskov/Projects/HAP/.venv/bin/activate
 -- **Verify Consistency**: Check if naming, placement, and responsibility align with `HAP` standards.
 - **Review Dependencies**: Ensure related docs, prompts, and skills reference the current structure.
 - **Standardize**: Refactor duplicated logic or inconsistent patterns into a shared, standardized form.
+- **Check Copilot Standard**: Run the `hap-copilot-standard-check` skill to verify the documented HAP Copilot layout is still upheld and still matches the current upstream VS Code customization spec (instructions, prompts, skills, agents/chat modes). Flag stale file names, missing files, and outdated format references; fix them if confirmed.
 
 ### 3. Documentation and Cleanup
-- **Sync API Keys**: If keys changed, update `.github/.notes/KEYS.md` to match `~/.config/hermes/env.zsh`.
+- **Sync API Keys**: If keys changed, update `config/KEYS.md` to match `~/.config/hermes/env.zsh`. Never commit this file — it must stay in `.gitignore`.
 - **Update Docs**: Add concise updates to `.github/docs/base-hermes-overview.md` and other relevant framework documents.
 
 ## Safety Rules
