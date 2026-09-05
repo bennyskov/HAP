@@ -15,7 +15,7 @@ Use these as the main standard references:
 - [copilot-markdown.instructions.md](/Users/bennyskov/Projects/HAP/.github/instructions/copilot-markdown.instructions.md)
 - [copilot-security.instructions.md](/Users/bennyskov/Projects/HAP/.github/instructions/copilot-security.instructions.md)
 - [copilot-testings.instructions.md](/Users/bennyskov/Projects/HAP/.github/instructions/copilot-testings.instructions.md)
-- [chatmodes/](/Users/bennyskov/Projects/HAP/.github/chatmodes)
+- [agents/](/Users/bennyskov/Projects/HAP/.github/agents)
 - [prompts/](/Users/bennyskov/Projects/HAP/.github/prompts)
 - [skills/](/Users/bennyskov/Projects/HAP/.github/skills)
 
@@ -33,7 +33,7 @@ Use these as the main standard references:
 - The file type matches the task.
 - Instructions are current and easy to follow.
 - Skills are reusable and action-oriented.
-- Chatmodes and prompts are clearly scoped.
+- Agents and prompts are clearly scoped.
 - No stale references point to archived or ignored content.
 
 ## **1.5 Rule of thumb**

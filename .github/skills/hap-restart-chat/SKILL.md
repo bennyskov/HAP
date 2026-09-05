@@ -46,7 +46,7 @@ Reload and align against these files when they exist:
 - `.github/instructions/copilot-security.instructions.md`
 - `.github/instructions/copilot-markdown.instructions.md`
 - `.github/instructions/copilot-testings.instructions.md`
-- `.github/chatmodes/hap-default.chatmode.md`
+- `.github/agents/hap-default.agent.md`
 
 Also review the currently active file if the user already has one open and it is relevant to the next task.
 
@@ -55,7 +55,7 @@ Also review the currently active file if the user already has one open and it is
 1. Acknowledge that the goal is to restart from a clean working baseline.
 2. Re-read the current workspace instructions and core Copilot setup files.
 3. Validate that the main customization folders are aligned:
-   - `.github/chatmodes/`
+   - `.github/agents/`
    - `.github/docs/`
    - `.github/instructions/`
    - `.github/prompts/`

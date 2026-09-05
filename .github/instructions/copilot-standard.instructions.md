@@ -15,7 +15,7 @@ When creating or updating AI guidance, use this structure:
 
 - `.github/copilot-instructions.md` — repo-wide baseline
 - `.github/instructions/*.instructions.md` — scoped instruction files
-- `.github/chatmodes/*.chatmode.md` — reusable chat modes
+- `.github/agents/*.agent.md` — reusable custom agents
 - `.github/prompts/*.prompt.md` — reusable prompts
 - `.github/skills/*/SKILL.md` — reusable workflows and operating procedures
 - `.github/docs/*.document.md` — project documents and standards
@@ -24,7 +24,7 @@ When creating or updating AI guidance, use this structure:
 
 - Instruction files use the `*.instructions.md` suffix.
 - Prompt files use the `*.prompt.md` suffix.
-- Chat mode files use the `*.chatmode.md` suffix.
+- Custom agent files use the `*.agent.md` suffix.
 - Skill folders use a short descriptive name with a `SKILL.md` file inside.
 - Project documents use the `*.document.md` suffix when they define repo rules or objectives.
 
@@ -36,8 +36,8 @@ Use `.github/copilot-instructions.md` for the global behavior, scope, and projec
 ### Scoped instructions
 Use `.github/instructions/*.instructions.md` for focused rules such as coding, markdown, testing, security, and ignore behavior.
 
-### Chat modes
-Use `.github/chatmodes/*.chatmode.md` for reusable AI interaction modes such as maintenance, review, or debugging.
+### Custom agents
+Use `.github/agents/*.agent.md` for reusable AI personas such as maintenance, review, or debugging.
 
 ### Skills
 Use `.github/skills/*/SKILL.md` when the task is a multi-step operating procedure that should be reusable and packaged clearly.
@@ -59,7 +59,7 @@ HAP uses a standards-aligned repo layout:
 1. Global behavior lives in `.github/copilot-instructions.md`.
 2. Scoped guidance lives in `.github/instructions/`.
 3. Reusable operations live in `.github/skills/`.
-4. Reusable interaction modes live in `.github/chatmodes/`.
+4. Reusable custom agents live in `.github/agents/`.
 5. Project documents and reference material live in `.github/docs/`.
 
 This keeps Copilot behavior clear, discoverable, and easier to maintain than ad hoc rules or hidden custom logic.

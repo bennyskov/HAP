@@ -11,7 +11,7 @@ Use this skill to check whether the current HAP Copilot standard is up to date a
 
 ## **1.1 Use When**
 
-- reviewing Copilot instructions, docs, chatmodes, prompts, or skills
+- reviewing Copilot instructions, docs, agents, prompts, or skills
 - checking for drift after edits
 - validating that a new file belongs in the right Copilot location
 - confirming whether the current standard is upheld
@@ -22,12 +22,12 @@ Re-read the latest current files before giving a verdict:
 
 - `.github/copilot-instructions.md`
 - `.github/instructions/*.instructions.md`
-- `.github/chatmodes/*.chatmode.*`
+- `.github/agents/*.agent.md`
 - `.github/prompts/*.prompt.md`
 - `.github/skills/*/SKILL.md`
 - `.github/docs/*.document.md`
 - `.github/instructions/copilot-standard.instructions.md`
-- repo-specific Copilot config files when they define behavior, such as `.github/chatmodes/custom_chatmode.json`
+- repo-specific Copilot config files when they define behavior, such as a legacy `.github/chatmodes/*.chatmode.md` file awaiting migration
 
 ## **1.3 Check Flow**
 
@@ -43,7 +43,7 @@ Re-read the latest current files before giving a verdict:
 - instructions live in the right scoped file
 - docs stay short, current, and readable
 - skills are reusable and action-oriented
-- chatmodes are clearly scoped
+- agents are clearly scoped
 - ignore and protected paths are respected
 - headings and filenames follow repo conventions
 

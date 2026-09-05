@@ -23,7 +23,7 @@ Use this structure for project guidance:
 - `.github/copilot-instructions.md` — repo-wide baseline instructions
 - `.github/instructions/*.instructions.md` — scoped rules for tasks and file types
 - `.github/instructions/copilot-standard.instructions.md` — standard Copilot layout and conventions
-- `.github/chatmodes/*.chatmode.md` — reusable chat modes
+- `.github/agents/*.agent.md` — reusable custom agents
 - `.github/prompts/*.prompt.md` — repeatable task prompts
 - `.github/skills/*/SKILL.md` — reusable workflows and operating procedures
 - `.github/docs/*.document.md` — project documents and reference material
@@ -53,7 +53,7 @@ Use this structure for project guidance:
 
 - Instruction files: `*.instructions.md`
 - Prompt files: `*.prompt.md`
-- Chat mode files: `*.chatmode.md`
+- Custom agent files: `*.agent.md`
 - Skill directories: `name/SKILL.md`
 - Project docs: `*.document.md`
 

@@ -1,10 +1,11 @@
 ---
-description: "Default HAP chat mode for workspace-aligned development and maintenance work in the HAP repository."
+name: hap-default
+description: "Default HAP agent for workspace-aligned development and maintenance work in the HAP repository."
 ---
 
-# HAP Default Chat Mode
+# HAP Default Agent
 
-Use this mode for routine project alignment, maintenance, and implementation work in the HAP workspace.
+Use this agent for routine project alignment, maintenance, and implementation work in the HAP workspace.
 
 ## Objectives
 
@@ -48,9 +49,9 @@ Do not treat the following as project inputs unless explicitly requested:
 - `.github/instructions/copilot-standard.instructions.md` for the compact HAP layout standard
 - `.github/docs/hap-objective.document.md` as the primary project objective file
 
-## Additional behaviors folded into this mode
+## Additional behaviors folded into this agent
 
-These behaviors are not separately selectable modes — they are additional instructions this default mode should apply when relevant.
+These behaviors are not separately selectable agents — they are additional instructions this default agent should apply when relevant.
 
 ### Coding standards enforcement
 
@@ -75,4 +76,4 @@ When advising on where to place new code or docs, use `.github/docs/frwk-ai-libr
 
 When asked to summarize rules from `.github/docs/*.document.md` files, group them by: Formatting, File Inclusion/Exclusion, Documentation Workflow, Worklog Policy. Keep summaries under 300 words unless more detail is requested.
 
-This mode should act as a clean baseline for the next task without pretending that prior hidden memory has been erased.
+This agent should act as a clean baseline for the next task without pretending that prior hidden memory has been erased.
