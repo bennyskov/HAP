@@ -63,7 +63,7 @@ source /Users/bennyskov/Projects/HAP/.venv/bin/activate
 
 ### 3. Documentation and Cleanup
 - **Sync API Keys**: If keys changed, update `config/KEYS.md` to match `~/.config/hermes/env.zsh`. Never commit this file — it must stay in `.gitignore`.
-- **Update Docs**: Add concise updates to `.github/docs/base-hermes-overview.md` and other relevant framework documents.
+- **Update Docs**: Add concise updates to `.github/docs/base-hermes-overview.document.md` and other relevant framework documents.
 
 ## Safety Rules
 - Never print secret values in logs or docs.
