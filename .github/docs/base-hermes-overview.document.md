@@ -27,7 +27,9 @@ Updated by the `hap-maintenance` skill's "Documentation and Cleanup" step. Refle
 ## **1.4 Known Quirks**
 
 - After `hermes update`, a stale "gateways may still be serving pre-update modules" warning can persist in `hermes status` output even after a successful `hermes gateway restart` with a new PID. `hermes doctor` reporting "Version files consistent" is the reliable signal that the update actually applied; treat the warning as cosmetic unless doctor also flags a version mismatch.
-- `brew upgrade --cask docker-desktop` can fail partway through if it needs `sudo` to remove a privileged helper tool (`com.docker.socket`). This requires an interactive terminal with a password prompt — it cannot be completed non-interactively. Run it manually when needed.
+- `brew upgrade --cask docker-desktop` fails partway through because removing `/Library/PrivilegedHelperTools/com.docker.*` requires `sudo`, and this machine has no passwordless-sudo rule or Touch ID sudo configured, so it cannot complete non-interactively (from an agent, script, or cron).
+  - **Fix applied**: enabled `autoDownloadUpdates` in `~/Library/Group Containers/group.com.docker/settings.json` so Docker Desktop pre-downloads new versions itself. You still need to click "Update" once via the Docker Desktop GUI (or `Docker menu > Check for Updates`) when it's running, which uses Docker's own privileged-helper auth (a normal macOS password/Touch ID dialog) instead of Homebrew/sudo.
+  - **Optional, not applied**: add a narrowly-scoped sudoers rule (e.g. via `sudo visudo -f /etc/sudoers.d/homebrew-docker-desktop`) granting passwordless root for the specific `rm`/`launchctl` commands the docker-desktop cask needs, so `brew upgrade --cask docker-desktop` never prompts. This is a standing security change (passwordless root for those commands, for this user) and should only be done deliberately, not as routine maintenance.
 
 ## **1.5 Maintenance Cadence**
 
