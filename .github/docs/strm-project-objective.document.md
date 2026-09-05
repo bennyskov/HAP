@@ -64,7 +64,7 @@ Example:
 Core trigger rules:
 - The requester handle must be allowlisted.
 - Only approved handles may receive a response.
-- Trigger ingestion may come from configured sources such as gateway logs, WhatsApp bridge integrations, or Telegram bot polling.
+- Trigger ingestion may come from configured sources such as gateway logs or Telegram bot polling.
 
 ## Supported Flow Pattern
 
@@ -108,6 +108,8 @@ Typical examples in the current structure include:
 - `tests/test_netflix_flow.py`
 - `config/code-forward-destinations.csv`
 - provider-specific state files in `config/`
+
+The Viaplay email poller should run every 30 seconds by default through the launchd helper.
 
 ## Security and Control Requirements
 

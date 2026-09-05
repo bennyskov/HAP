@@ -3,39 +3,80 @@ name: strm-get-provider-codes
 description: Use this skill for repeatable maintenance of the streaming infrastructure and email handling.
 ---
 
-# Skill Instructions
+# **1. Skill Instructions**
 
-use the hermes agent to build and run this skill.
-build all scripts in python and allscripts are to be placed in scripts.
-use a framework functions module to make as many functions reusable as possible.
-if you need to install any dependencies, please add them to the requirements.txt file in .venv.
-make scripts that can be run from the command line, and also callable from other scripts.
-set default to cover all providers, but allow for a provider to be specified as an argument to the script.
-also allow for a user to be specified as an argument to the script, and if no user is specified, use the default user.
-use framework.py as default framework.
+## **1.1 Purpose**
 
-# objective
+Use this skill for repeatable maintenance of streaming-provider login-code handling.
 
-when a user wants to log in to a streaming service, the user is questioned about whether they are part of the home network or not.
+## **1.2 Run Mode**
 
-the procedure can differ depending on the provider, but in general, if the user is part of the home network, they can log in directly.
+- Use the Hermes agent to build and run this skill.
+- Keep all scripts in `scripts/`.
+- Use Python for all scripts.
+- Keep scripts runnable from the command line and callable from other scripts.
+- Use `framework.py` as the default shared framework.
+- Prefer reusable functions in a shared functions module.
+- Add any new dependencies to the project `requirements.txt`.
+- Keep the implementation modular and covered by tests.
+- The inbox poller should run every 30 seconds by default.
+- The poller should load project credentials from `config/KEYS.md` and support the `BOT_EMAIL_*` aliases used by the workspace.
 
-this is the sequence of events for a user who wants to login to Viaplay.
-if they are not a part of the home network, they can press "request a temporary code" for logging in.
-this is usually if you are on a mobile device, or if you are away on a computer that is not part of the home network.
+## **1.3 Runtime Inputs**
 
-when users press the request a temporary code button, it will email the owner of the streaming service account, with a code to be used for logging in. When the owner receives the email, we must forward the mail to a backup account.
+- Supported providers default to all configured providers.
+- Allow a provider to be passed as an argument.
 
-We shall also extract the code from the mail, and save it in this project.
+## **1.4 Workflow**
 
-We shall have a list of approved users, and only those users can request a code. If the user is not approved, we shall not return a code.
+### **1.4.1 Start point**
 
-the approved users are listed in the `config/code-forward-destinations.csv` file.
+- Start at Step 1 unless the user explicitly asks to resume from a later step.
+- If the user gives a step number, begin from that step and continue to the end.
+- If the user asks to rerun, restart from Step 1.
 
-in the `config/code-forward-providers.csv` file, we have a list of supported providers, and the search string to use for extracting the code from the email.
+### **1.4.2 Step 1 — Load configuration**
 
-we shall monitor the email account bennyskov@hotmail.com for incoming emails from the providers.
+- Read `config/code-forward-providers.csv` for supported providers and code-extraction patterns.
 
-When an email is received, extract the code from the email, and forward it to email bsjunk13@hotmail.com, telegram bot, and the WhatsApp bot
+### **1.4.3 Step 2 — Validate the request**
 
-we have these streaming services supported: Netflix, Viaplay, TV2Play.
+- Confirm the requested provider is supported.
+
+### **1.4.4 Step 3 — Monitor provider mail**
+
+- Watch the inbox `bennyskov@hotmail.com` for incoming provider emails.
+- Handle login-code emails only for supported providers.
+- Run this skill as a scheduled poller every 30 seconds (for example via launchd or cron) so it regularly checks for new requests.
+
+### **1.4.5 Step 4 — Extract the code**
+
+- Extract the temporary login code from the email body or subject using the configured provider pattern.
+- Save the extracted code in the project workflow or storage used by this skill.
+
+### **1.4.6 Step 5 — Forward the email**
+
+- Forward the received mail to `bsjunk13@hotmail.com`.
+- Forward the code through the Telegram bot `@ViaplayCodeBot` using `TELEGRAM_TOKEN`.
+- Read bot keys and IDs from environment variables.
+- Use `config/code-forward-destinations.csv` for the Telegram chat id for `bsjunk13@hotmail.com`.
+- Do not hardcode bot tokens, chat IDs, or other credentials.
+- After successful processing and forwarding, delete the original mail from the inbox.
+
+### **1.4.7 Step 6 — Apply provider-specific flow**
+
+- Follow the provider-specific login procedure where needed.
+- For Viaplay, if the user is on the home network, they can log in directly.
+- If the user is not on the home network, they can request a temporary code.
+
+## **1.5 Guardrails**
+
+- Do not log secrets, passwords, or full credentials.
+- Keep the implementation small, reusable, and testable.
+- Prefer shared helpers over duplicated logic.
+
+## **1.6 Supported Providers**
+
+- Netflix
+- Viaplay
+- TV2Play
