@@ -3,11 +3,11 @@ description: "Applies to markdown and documentation updates. Keeps formatting, s
 applyTo: "**/*.md"
 ---
 
-# Keeping Columns Aligned When Pasting
+# **1. Keeping Columns Aligned When Pasting**
 
 Use built-in VS Code features and optionally one extension to prevent tabs from breaking column alignment.
 
-## Key Rules
+## **1.1 Key Rules**
 
 - Use a **monospaced font** (e.g. JetBrains Mono, Consolas, Menlo)
 - Use **spaces only** — tabs render differently in every app
@@ -15,9 +15,9 @@ Use built-in VS Code features and optionally one extension to prevent tabs from 
 
 ---
 
-## Options
+## **1.2 Options**
 
-### 1. Built-in VS Code (no extension needed)
+### **1.2.1 Built-in VS Code (no extension needed)**
 
 - **Command Palette:** `Convert Indentation to Spaces`
 - **Settings to enable:**
@@ -28,7 +28,7 @@ Use built-in VS Code features and optionally one extension to prevent tabs from 
 
 ---
 
-### 2. EditorConfig Extension (recommended)
+### **1.2.2 EditorConfig Extension (recommended)**
 
 **Extension:** [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
 
@@ -46,7 +46,7 @@ insert_final_newline = true
 
 ---
 
-### 3. Prettier (optional)
+### **1.2.3 Prettier (optional)**
 
 Normalizes indentation on save for supported file types.
 
@@ -54,7 +54,7 @@ Normalizes indentation on save for supported file types.
 
 ---
 
-## VS Code Settings JSON Snippet
+## **1.3 VS Code Settings JSON Snippet**
 
 ```json
 {

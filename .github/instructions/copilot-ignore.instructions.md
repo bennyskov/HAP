@@ -3,17 +3,17 @@ description: "Defines which files and directories agents must ignore during vali
 applyTo: "**/*"
 ---
 
-# Agent Ignore Rules for Validation and Run Operations
+# **1. Agent Ignore Rules for Validation and Run Operations**
 
-## Purpose
+## **1.1 Purpose**
 
 Define which files and directories agents must exclude when validating code, selecting targets, and running project commands.
 
-## Mandatory Exclusions
+## **1.2 Mandatory Exclusions**
 
 Agents must not use, parse, validate, execute, or modify content from the following paths unless the user explicitly requests it.
 
-### Directories
+### **1.2.1 Directories**
 
 - .archive/
 - logs/
@@ -30,7 +30,7 @@ Agents must not use, parse, validate, execute, or modify content from the follow
 - packages/
 - TestResults/
 
-### Files and Patterns
+### **1.2.2 Files and Patterns**
 
 - .vscode/settings.json
 - .gitignore
@@ -48,31 +48,31 @@ Agents must not use, parse, validate, execute, or modify content from the follow
 - .DS_Store
 - desktop.ini
 
-## Validation Rules
+## **1.3 Validation Rules**
 
 - Do not include excluded paths in lint, test, build, static analysis, or search scopes.
 - Do not use excluded files as references for code patterns or implementation decisions.
 - Do not report findings from excluded paths as actionable project issues.
 
-## Run Rules
+## **1.4 Run Rules**
 
 - Do not execute scripts, binaries, or SQL files from excluded paths.
 - Do not treat log, temp, cache, archive, or credential content as runnable project inputs.
 - Resolve run targets only from active source locations in the maintained project tree.
 
-## Security and Safety
+## **1.5 Security and Safety**
 
 - Never read or modify credential-related files unless explicitly requested by the user.
 - Treat archive and backup material as historical only, not part of current runtime behavior.
 - Ignore binary artifacts unless the user explicitly asks for binary inspection.
 
-## Exception Handling
+## **1.6 Exception Handling**
 
 - Exclusions may be overridden only by an explicit user request.
 - If the user asks to include an excluded path, limit work to the requested scope and avoid broad recursive actions.
 - When uncertain whether a path is active or archived, prefer excluding it and ask for clarification.
 
-## Agent Behavior Requirements
+## **1.7 Agent Behavior Requirements**
 
 - Prioritize active, version-controlled source files in current project directories.
 - Never suggest edits to excluded paths during normal coding, validation, or run workflows.

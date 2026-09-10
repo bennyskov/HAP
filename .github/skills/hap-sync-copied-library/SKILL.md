@@ -3,15 +3,15 @@ name: hap-sync-copied-library
 description: Use this skill to initialize, clean, and sync a local project into GitHub. It handles repo creation when missing and safe synchronization when a repo already exists.
 ---
 
-# Skill Instructions
+# **1. Skill Instructions**
 
-## Purpose
+## **1.1 Purpose**
 
 Use this skill when you want to copy a codebase into an existing repository, update a library snapshot, or align a target repo with a source directory. It helps you initialize a repo when needed, create it on GitHub if it is missing, and commit and push changes safely without overwriting sensitive data or breaking the remote history.
 
 The GitHub organization/account used here: https://github.com/bennyskov
 
-## Use when
+## **1.2 Use when**
 
 - The local project is not yet a git repo.
 - The repo exists locally but has no remote configured.
@@ -19,7 +19,7 @@ The GitHub organization/account used here: https://github.com/bennyskov
 - A repo was created from a copied library and needs to be pushed.
 - A new repo needs to be created from the current workspace.
 
-## Safety rules
+## **1.3 Safety rules**
 
 - Never commit secrets, API keys, environment files, token files, or credentials.
 - Remove credentialed or generated files before pushing.
@@ -27,9 +27,9 @@ The GitHub organization/account used here: https://github.com/bennyskov
 - If `GITHUB_TOKEN` is set incorrectly, clear it first: `unset GITHUB_TOKEN`.
 - Use `--force-with-lease` only after a deliberate cleanup of sensitive content and after confirming the intended remote state.
 
-## Standard flow
+## **1.4 Standard flow**
 
-### 1. Verify GitHub auth
+### **1.4.1 Verify GitHub auth**
 
 ```bash
 unset GITHUB_TOKEN
@@ -44,7 +44,7 @@ gh auth login -h github.com -w
 
 If a stale token is causing `401 Bad credentials`, clear the environment variable again before retrying.
 
-### 2. Initialize the local repository if needed
+### **1.4.2 Initialize the local repository if needed**
 
 ```bash
 cd /path/to/project
@@ -58,7 +58,7 @@ git config user.name "bennyskov"
 git config user.email "bennyskov@gmail.com"
 ```
 
-### 3. Check whether the remote repository exists
+### **1.4.3 Check whether the remote repository exists**
 
 ```bash
 gh repo view bennyskov/REPO_NAME --json name,visibility
@@ -79,7 +79,7 @@ git remote add origin https://github.com/bennyskov/REPO_NAME.git
 # git remote set-url origin https://github.com/bennyskov/REPO_NAME.git
 ```
 
-### 4. Commit and push
+### **1.4.4 Commit and push**
 
 ```bash
 git add .
@@ -93,7 +93,7 @@ If the repo is already tracking a remote and the branch is set, use:
 git push -u origin main
 ```
 
-### 5. Handle push protection from secret scanning
+### **1.4.5 Handle push protection from secret scanning**
 
 If GitHub rejects the push with `GH013` or `Push cannot contain secrets`, inspect the commit and remove sensitive files before retrying. Typical cleanup steps:
 
@@ -116,7 +116,7 @@ git push --force-with-lease origin main
 
 This is the correct pattern when earlier commits included credential material that GitHub secret scanning blocks.
 
-## Repo sync for this HAP workspace
+## **1.5 Repo sync for this HAP workspace**
 
 This workspace was initialized and synced using the same flow:
 

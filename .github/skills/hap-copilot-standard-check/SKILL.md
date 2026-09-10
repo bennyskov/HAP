@@ -3,33 +3,34 @@ name: hap-copilot-standard-check
 description: Use this skill to verify the current HAP Copilot standard against the latest repo guidance and report whether it is upheld.
 ---
 
-# Skill Instructions
+# **1. Skill Instructions**
 
-## **1. Purpose**
+## **1.1 Purpose**
 
 Use this skill to check whether the current HAP Copilot standard is up to date and whether the repository still follows it.
 
-## **1.1 Use When**
+## **1.2 Use When**
 
 - reviewing Copilot instructions, docs, agents, prompts, or skills
 - checking for drift after edits
 - validating that a new file belongs in the right Copilot location
 - confirming whether the current standard is upheld
 
-## **1.2 Standard Sources**
+## **1.3 Standard Sources**
 
 Re-read the latest current files before giving a verdict:
 
 - `.github/copilot-instructions.md`
 - `.github/instructions/*.instructions.md`
 - `.github/agents/*.agent.md`
-- `.github/prompts/*.prompt.md`
+- legacy `.github/prompts/*.prompt.md` files when present
 - `.github/skills/*/SKILL.md`
 - `.github/docs/*.document.md`
 - `.github/instructions/copilot-standard.instructions.md`
 - repo-specific Copilot config files when they define behavior, such as a legacy `.github/chatmodes/*.chatmode.md` file awaiting migration
+- current official VS Code customization documentation when checking whether a repo convention is still supported or deprecated
 
-## **1.3 Check Flow**
+## **1.4 Check Flow**
 
 1. Re-read the latest source files.
 2. Compare the repo layout with the documented standard.
@@ -37,7 +38,7 @@ Re-read the latest current files before giving a verdict:
 4. Decide whether the standard is upheld.
 5. Report only concrete findings and a short verdict.
 
-## **1.4 What to Verify**
+## **1.5 What to Verify**
 
 - file type matches its role
 - instructions live in the right scoped file
@@ -47,7 +48,7 @@ Re-read the latest current files before giving a verdict:
 - ignore and protected paths are respected
 - headings and filenames follow repo conventions
 
-## **1.5 Output**
+## **1.6 Output**
 
 Return:
 
@@ -56,7 +57,7 @@ Return:
 - files that need updates
 - one short next step
 
-## **1.6 Guardrails**
+## **1.7 Guardrails**
 
 - Do not edit files unless explicitly asked
 - Do not treat archived content as current

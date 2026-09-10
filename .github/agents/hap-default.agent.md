@@ -3,18 +3,18 @@ name: hap-default
 description: "Default HAP agent for workspace-aligned development and maintenance work in the HAP repository."
 ---
 
-# HAP Default Agent
+# **1. HAP Default Agent**
 
 Use this agent for routine project alignment, maintenance, and implementation work in the HAP workspace.
 
-## Objectives
+## **1.1 Objectives**
 
 1. Stay anchored to the current repository structure.
 2. Respect project instructions in `.github/instructions/`.
 3. Prefer current source files over archived or generated data.
 4. Keep work targeted, minimal, and consistent with the active project scope.
 
-## Working rules
+## **1.2 Working rules**
 
 - Re-read relevant project guidance before starting a task.
 - Validate key repo instructions, docs, and scope files when context seems stale.
@@ -27,33 +27,33 @@ Use this agent for routine project alignment, maintenance, and implementation wo
 - Treat commented-out lines as ignorable unless explicitly asked to restore them.
 - Assume references favor non-`.archive` versions when duplicates exist.
 - When debugging and fixing code, adhere to best practices for the specific programming language involved.
-- When debugging and making backups or new scripts for testing, treat the original files as read-only, and move workfiles afterward to `.archive AI work scripts`.
+- When debugging and making backups or new scripts for testing, treat the original files as read-only, use the session workspace for temporary workfiles, and remove them when finished.
 - After document edits, ensure UTF-8 (with BOM if required by tooling) and LF endings.
 - Ignore build artifacts, lockfiles, and temporary files (`*.tmp`, `*.temp`, `*.log`, `*.cache`, `*.bak`, `*.old`) unless explicitly requested.
 - Respect credential security by never attempting to read or modify authentication files in `credentials/`.
 
-## Ignored paths and files
+## **1.3 Ignored paths and files**
 
 Do not treat the following as project inputs unless explicitly requested:
 
 - Paths: `.archive/`, `.git/`, `.vs/`, `bin/`, `credentials/`, `data/`, `logs/`, `logs-Copy/`, `node_modules/`, `obj/`, `packages/`, `swql/`, `temp/`, `TestResults/`
 - Files: `.DS_Store`, `.github/docs/hap-processing-log.document.md`, `.github/docs/hap-saved-prompt.document.md`, `.gitignore`, `.vscode/settings.json`, `Copilot-Processing.md`, `desktop.ini`, `thumbs.db`
 
-## Standard file references
+## **1.4 Standard file references**
 
 - `.github/copilot-instructions.md`
 - `.github/instructions/`
 - `.github/docs/`
 - `.github/skills/`
-- `.github/prompts/`
+- `.github/prompts/` for legacy prompt compatibility only; prefer `.github/skills/` for reusable workflows
 - `.github/instructions/copilot-standard.instructions.md` for the compact HAP layout standard
 - `.github/docs/hap-objective.document.md` as the primary project objective file
 
-## Additional behaviors folded into this agent
+## **1.5 Additional behaviors folded into this agent**
 
 These behaviors are not separately selectable agents — they are additional instructions this default agent should apply when relevant.
 
-### Coding standards enforcement
+### **1.5.1 Coding standards enforcement**
 
 When given or reading a markdown file, enforce the project's documented markdown header numbering and formatting rules from the active repository instructions:
 
@@ -64,15 +64,15 @@ When given or reading a markdown file, enforce the project's documented markdown
 
 Ignore `.archive/`, `logs/`, `data/`, `credentials/`, `temp/`, and `bin/` during this work. Never alter the worklog directly unless asked; instead request an operation or return a structured worklog entry (see below).
 
-### Worklog entry generation
+### **1.5.2 Worklog entry generation**
 
 When asked to produce a worklog entry after actions, output a JSON object with keys `dateTime` (UTC ISO), `activity`, `rationale`, `filesAffected` (array), and `notes`. Do not modify worklog files directly unless explicitly asked. Respect the ignore lists above.
 
-### File structure advice
+### **1.5.3 File structure advice**
 
 When advising on where to place new code or docs, use `.github/docs/frwk-ai-library-structure-guide.document.md` (if present) and the current project objective documents. Never suggest adding content into ignored directories. Return concise rationale per suggestion.
 
-### Project summarization
+### **1.5.4 Project summarization**
 
 When asked to summarize rules from `.github/docs/*.document.md` files, group them by: Formatting, File Inclusion/Exclusion, Documentation Workflow, Worklog Policy. Keep summaries under 300 words unless more detail is requested.
 

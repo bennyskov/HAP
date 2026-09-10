@@ -8,8 +8,8 @@ This document tracks the current state of the `BASE`-level Hermes runtime (macOS
 
 Updated by the `hap-maintenance` skill's "Documentation and Cleanup" step. Reflects the most recent maintenance pass.
 
-- Last updated: 2026-09-05
-- Hermes Agent version: v0.21.0 (upstream `d20a8e44`)
+- Last updated: 2026-09-10
+- Hermes Agent version: v0.21.1 (upstream `564aef29`)
 - Install method: git, at `~/.hermes/hermes-agent`
 - Python: 3.11.15
 - Active local model: `qwen2.5-coder:7b` (Ollama)

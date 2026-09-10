@@ -3,17 +3,17 @@ name: hap-restart-chat
 description: Re-anchor Copilot on the current HAP workspace so a stuck session can return with a clean, ready-to-work baseline.
 ---
 
-# Skill Instructions
+# **1. Skill Instructions**
 
-## Purpose
+## **1.1 Purpose**
 
 Use this skill when the current Copilot session feels stuck, confused, or overly influenced by earlier context and you want a clean return to the active HAP workspace.
 
-## Objective
+## **1.2 Objective**
 
 Re-establish a reliable working baseline for the next task by reloading the current workspace guidance, validating the core Copilot customization files, and confirming readiness to continue.
 
-## Scope
+## **1.3 Scope**
 
 This skill is for recovery and re-alignment only.
 
@@ -28,7 +28,7 @@ It should not:
 - Update worklogs by default.
 - Make unrelated code or document changes.
 
-## Use When
+## **1.4 Use When**
 
 Use this skill when:
 - the current session feels confused or stale
@@ -36,7 +36,7 @@ Use this skill when:
 - a recovery pass is needed before resuming the next task
 - you need to verify the workspace baseline without making project changes
 
-## Required Files To Re-Read
+## **1.5 Required Files To Re-Read**
 
 Reload and align against these files when they exist:
 - `.github/copilot-instructions.md`
@@ -50,7 +50,7 @@ Reload and align against these files when they exist:
 
 Also review the currently active file if the user already has one open and it is relevant to the next task.
 
-## Recovery Flow
+## **1.6 Recovery Flow**
 
 1. Acknowledge that the goal is to restart from a clean working baseline.
 2. Re-read the current workspace instructions and core Copilot setup files.
@@ -58,7 +58,7 @@ Also review the currently active file if the user already has one open and it is
    - `.github/agents/`
    - `.github/docs/`
    - `.github/instructions/`
-   - `.github/prompts/`
+   - `.github/prompts/` when legacy prompt files are present
    - `.github/skills/`
 4. Check whether key referenced files still exist and note any stale references. If drift is found (missing files, renamed conventions, outdated format references), do not attempt a full audit here — recommend running the `hap-copilot-standard-check` skill for a deeper pass, and note the recommendation in the output.
 5. Re-state the current working baseline briefly:
@@ -67,14 +67,14 @@ Also review the currently active file if the user already has one open and it is
    - which files control Copilot behavior
 6. Confirm that the session is ready for a new request.
 
-## Guardrails
+## **1.7 Guardrails**
 
 - Do not pretend that all memory is gone.
 - Re-establish a clean, current, workspace-aligned starting point instead.
 - Keep the recovery pass brief and focused on readiness.
 - Prefer read-only validation over editing.
 
-## Expected Output
+## **1.8 Expected Output**
 
 Return a short recovery summary that includes:
 - confirmation that the workspace baseline has been reloaded
@@ -82,6 +82,6 @@ Return a short recovery summary that includes:
 - if drift was found, a note recommending `hap-copilot-standard-check` for a deeper audit
 - a short statement that the assistant is ready for the next task
 
-## Rule of Thumb
+## **1.9 Rule of Thumb**
 
 The goal is not to pretend all memory is gone. The goal is to restore a clean, current, workspace-aligned starting point for the next request.

@@ -1,12 +1,12 @@
-# Project Objective: Hermes Streaming Maintenance (STRM)
+# **1. Project Objective: Hermes Streaming Maintenance (STRM)**
 
-## Objective
+## **1.1 Objective**
 
 The purpose of `STRM` is to build and maintain a reliable streaming-support workflow that can receive approved trigger messages, retrieve the latest one-time access code or activation state for a supported provider, and return a safe, traceable response to the requester.
 
 This project is focused on streaming access-code handling and related maintenance workflows. It should turn a manual, repetitive process into a controlled and repeatable automation flow.
 
-## Scope
+## **1.2 Scope**
 
 `STRM` is limited to streaming-provider support workflows and the automation required to keep them working.
 
@@ -24,14 +24,14 @@ Excluded from scope:
 - Unrelated messaging automation.
 - Broad media-management or subscription-management tasks outside the code-retrieval flow.
 
-## Naming and Structure Alignment
+## **1.3 Naming and Structure Alignment**
 
-This document is aligned to the current project file name `strm-project-objective.document.md` and the related skill name `strm-streaming-maintenance`.
+This document is aligned to the current project file name `strm-project-objective.document.md` and the related skill name `strm-get-provider-codes`.
 
 The previous title `hermes-code-activations (STCA)` did not match the active file structure. The current project name should be treated as:
 - **Hermes Streaming Maintenance** (`STRM`)
 
-## Business Outcome
+## **1.4 Business Outcome**
 
 The project should:
 - Reduce manual effort when retrieving streaming login or activation codes.
@@ -39,7 +39,7 @@ The project should:
 - Keep a traceable and repeatable process with clear logging and deduplication.
 - Make streaming support workflows easier to maintain as providers change behavior over time.
 
-## What This Project Should Do
+## **1.5 What This Project Should Do**
 
 `STRM` should help answer practical questions such as:
 
@@ -50,7 +50,7 @@ The project should:
 - Was the requester notified with the correct response?
 - Was the event logged and persisted so duplicates are avoided?
 
-## Trigger Model
+## **1.6 Trigger Model**
 
 The current request pattern is based on a provider-specific trigger message in the form:
 
@@ -66,7 +66,7 @@ Core trigger rules:
 - Only approved handles may receive a response.
 - Trigger ingestion may come from configured sources such as gateway logs or Telegram bot polling.
 
-## Supported Flow Pattern
+## **1.7 Supported Flow Pattern**
 
 The shared workflow for supported providers should be:
 
@@ -78,7 +78,7 @@ The shared workflow for supported providers should be:
 6. Optionally delete the original message if configured.
 7. Persist state so the same trigger is not processed twice.
 
-## Current Provider Direction
+## **1.8 Current Provider Direction**
 
 The active project direction includes support for flows such as:
 - Viaplay
@@ -92,7 +92,7 @@ Provider implementations may differ, but they should follow the same framework o
 - fallback handling
 - logging and deduplication
 
-## Important Components
+## **1.9 Important Components**
 
 This project is supported by assets such as:
 - provider-specific scripts under `scripts/`
@@ -111,7 +111,7 @@ Typical examples in the current structure include:
 
 The Viaplay email poller should run every 30 seconds by default through the launchd helper.
 
-## Security and Control Requirements
+## **1.10 Security and Control Requirements**
 
 This project must preserve strict control over access and secrets.
 
@@ -122,7 +122,7 @@ Important requirements:
 - Logs must support troubleshooting without exposing secrets.
 - Failure conditions must be reported honestly instead of guessing or fabricating successful outcomes.
 
-## Success Criteria
+## **1.11 Success Criteria**
 
 The project is successful when:
 - A valid trigger from an approved requester returns the correct code or a clear status response.
@@ -131,9 +131,9 @@ The project is successful when:
 - Logs and state files provide enough traceability for troubleshooting.
 - Provider workflows remain maintainable as scripts, tests, and state handling evolve.
 
-## Responsibility Boundary
+## **1.12 Responsibility Boundary**
 
 `STRM` should answer the question: "How do we keep request-driven streaming support workflows reliable, safe, and easy to operate?"
 
-If the work is about shared tooling or reusable automation patterns, it belongs in `FRWK`.
+If the work is about shared tooling or reusable automation patterns, it belongs in `HAP`.
 If the work is about maintaining the machine or Hermes runtime, it belongs in `BASE`.
