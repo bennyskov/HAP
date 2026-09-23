@@ -7,5 +7,17 @@
 			"path": "../../.hermes"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"chat.tools.terminal.autoApprove": {
+			"/^python3 -c 'from pathlib import Path; p=Path\\(\"/Users/bennyskov/Projects/HAP/config/KEYS\\.md\"\\); names=\\[\\]\nfor raw in p\\.read_text\\(encoding=\"utf-8\"\\)\\.splitlines\\(\\):\n s=raw\\.strip\\(\\)\\.replace\\(\"\\\\r\",\"\"\\)\n if s\\.startswith\\(\"export \"\\) and \"=\" in s:\n  n,v=s\\[7:\\]\\.split\\(\"=\",1\\); names\\.append\\(\\(n\\.strip\\(\\), bool\\(v\\.strip\\(\\)\\.strip\\(\"\\\\\"\\\\x27\"\\)\\)\\)\\)\nprint\\(\"Configured variable names \\(values hidden\\):\"\\)\nfor n,ok in names: print\\(f\"- \\{n\\}: \\{\\\\\"set\\\\\" if ok else \\\\\"empty\\\\\"\\}\"\\)'$/": {
+				"approve": true,
+				"matchCommandLine": true
+			},
+			"/^source /Users/bennyskov/Projects/HAP/\\.venv/bin/activate && printf 'venv=%s\\\\n' \"\\$VIRTUAL_ENV\" && command -v brew && command -v hermes && command -v ollama$/": {
+				"approve": true,
+				"matchCommandLine": true
+			},
+			"brew": true
+		}
+	}
 }

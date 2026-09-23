@@ -1,2 +1,4 @@
-provider,search_string
-viaplay,"Viaplay midlertidig engangskode"
+provider,search_string,link_text,code_search_string,code_pattern
+viaplay,"Viaplay midlertidig engangskode",,,
+tv2play,"Bekræft midlertidig adgang til TV 2 Play",,,
+netflix,"Din midlertidige adgangskode til Netflix","Hent kode","Netflix: Din loginkode","Indtast denne kode for at logge på\s*([0-9]{6})\b"

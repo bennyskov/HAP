@@ -173,17 +173,56 @@ def delete_message(token: str, message_id: str) -> None:
             return
     except urllib.error.HTTPError as e:
         if e.code == 404:
-            sys.stderr.write(f"Graph delete warning 404: message {message_id} was already gone.\n")
+            sys.stderr.write("Graph delete warning 404: processed message was already gone.\n")
             return
-        detail = e.read().decode("utf-8", "replace")
-        sys.stderr.write(f"Graph delete error {e.code}: {detail}\n")
+        sys.stderr.write(f"Graph delete failed with HTTP {e.code}.\n")
         raise SystemExit(4) from e
+    except urllib.error.URLError as e:
+        raise SystemExit("ERROR: Graph delete failed.") from e
+
+
+def forward_message(
+    token: str,
+    message_id: str,
+    recipient: str = FORWARD_EMAIL,
+) -> None:
+    """Forward the exact matched message through Microsoft Graph."""
+    if not message_id:
+        raise SystemExit("ERROR: cannot forward processed mail without a message id.")
+
+    url = (
+        f"{GRAPH_BASE}/me/messages/"
+        f"{urllib.parse.quote(message_id, safe='')}/forward"
+    )
+    payload = {
+        "comment": "",
+        "toRecipients": [{"emailAddress": {"address": recipient}}],
+    }
+    req = urllib.request.Request(
+        url,
+        data=json.dumps(payload).encode("utf-8"),
+        method="POST",
+        headers={
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json",
+        },
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=30) as response:
+            if response.status not in (200, 202):
+                raise SystemExit("ERROR: email forward was not acknowledged.")
+    except urllib.error.HTTPError as exc:
+        raise SystemExit(
+            f"ERROR: email forward failed with HTTP {exc.code}."
+        ) from exc
+    except urllib.error.URLError as exc:
+        raise SystemExit("ERROR: email forward failed.") from exc
 
 
 def load_telegram_chat_id(recipient_email: str) -> str:
     """Resolve the Telegram chat id for the configured forwarding address."""
     if not DESTINATIONS_FILE.exists():
-        raise SystemExit(f"ERROR: destination file not found: {DESTINATIONS_FILE}")
+        raise SystemExit("ERROR: Telegram destination configuration was not found.")
 
     with DESTINATIONS_FILE.open(newline="", encoding="utf-8") as handle:
         reader = csv.DictReader(handle)
@@ -197,7 +236,7 @@ def load_telegram_chat_id(recipient_email: str) -> str:
     fallback = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
     if fallback:
         return fallback
-    raise SystemExit(f"ERROR: no Telegram chat id found for {recipient_email}")
+    raise SystemExit("ERROR: no Telegram chat id was configured.")
 
 
 def build_forward_text(code: str, message: dict) -> str:
@@ -246,7 +285,7 @@ def send_email_forward(subject: str, body: str, recipient: str) -> None:
                 server.login(smtp_user, email_password)
                 server.send_message(msg)
     except (smtplib.SMTPException, OSError) as exc:
-        raise SystemExit(f"ERROR: email forward failed: {exc}") from exc
+        raise SystemExit("ERROR: email forward failed.") from exc
 
 
 def send_telegram_forward(chat_id: str, text: str) -> None:
@@ -265,12 +304,13 @@ def send_telegram_forward(chat_id: str, text: str) -> None:
     req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/x-www-form-urlencoded"})
     try:
         with urllib.request.urlopen(req, timeout=30) as resp:
-            json.loads(resp.read().decode("utf-8"))
+            result = json.loads(resp.read().decode("utf-8"))
+            if result.get("ok") is not True:
+                raise SystemExit("ERROR: Telegram forward was not acknowledged.")
     except urllib.error.HTTPError as exc:
-        detail = exc.read().decode("utf-8", "replace")
-        raise SystemExit(f"ERROR: Telegram forward failed {exc.code}: {detail}") from exc
+        raise SystemExit(f"ERROR: Telegram forward failed with HTTP {exc.code}.") from exc
     except urllib.error.URLError as exc:
-        raise SystemExit(f"ERROR: Telegram forward failed: {exc}") from exc
+        raise SystemExit("ERROR: Telegram forward failed.") from exc
 
 
 def forward_result(code: str, message: dict) -> None:
@@ -278,10 +318,22 @@ def forward_result(code: str, message: dict) -> None:
     subject = f"Viaplay code {code}"
 
     send_email_forward(subject, text, FORWARD_EMAIL)
+    send_telegram_result(code, message)
 
+
+def send_telegram_result(code: str, message: dict) -> None:
+    text = build_forward_text(code, message)
     chat_id = load_telegram_chat_id(FORWARD_EMAIL)
     telegram_text = f"{TELEGRAM_BOT_NAME}\n{text}"
     send_telegram_forward(chat_id, telegram_text)
+
+
+def process_viaplay_message(token: str, code: str, message: dict) -> None:
+    """Forward and acknowledge a matched message before deleting that exact mail."""
+    message_id = message.get("id", "") or ""
+    forward_message(token, message_id)
+    send_telegram_result(code, message)
+    delete_message(token, message_id)
 
 
 def main() -> int:
@@ -308,8 +360,7 @@ def main() -> int:
     with open(args.out, "w") as f:
         f.write(code + "\n")
 
-    forward_result(code, message)
-    delete_message(token, message.get("id", "") or "")
+    process_viaplay_message(token, code, message)
 
     received = message.get("receivedDateTime", "")
     result = {
