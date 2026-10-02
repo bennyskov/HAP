@@ -8,11 +8,11 @@ This document tracks the current state of the `BASE`-level Hermes runtime (macOS
 
 Updated by the `hap-maintenance` skill's "Documentation and Cleanup" step. Reflects the most recent maintenance pass.
 
-- Last updated: 2026-09-16
-- Hermes Agent version: v0.21.3 (upstream `6cd25026`)
+- Last updated: 2026-10-02
+- Hermes Agent version: v0.21.5+5683.g10c6188 (upstream `10c6188d`)
 - Install method: git, at `~/.hermes/hermes-agent`
-- Python: 3.11.15
-- Config version: v45
+- Python: 3.14.7
+- Config version: v49
 - Active local model: `qwen2.5-coder:7b` (Ollama)
 - Gateway manager: `launchd`
 - Provider connectivity: Ollama reachable at `http://localhost:11434`
@@ -28,6 +28,7 @@ Updated by the `hap-maintenance` skill's "Documentation and Cleanup" step. Refle
 ## **1.4 Known Quirks**
 
 - After `hermes update`, a stale "gateways may still be serving pre-update modules" warning can persist in `hermes status` output even after a successful `hermes gateway restart` with a new PID. `hermes doctor` reporting "Version files consistent" is the reliable signal that the update actually applied; treat the warning as cosmetic unless doctor also flags a version mismatch.
+- The `~/.zshrc` auto-activate hook for the HAP project venv must not `source .venv/bin/activate` directly: that script depends on `$BASH_SOURCE`, which this machine's zsh (5.9) does not populate, so sourcing it resolves `VIRTUAL_ENV` to the parent of the current directory instead of the venv path (silently breaking `PATH`/`VIRTUAL_ENV`). The hook now sets `VIRTUAL_ENV`/`PATH`/`_OLD_VIRTUAL_PATH` directly instead of sourcing the bash-only script. The hook also previously pointed at a stale `~/Projects/hermes-agent-project` directory and was repointed to `~/Projects/HAP`.
 - `brew upgrade --cask docker-desktop` fails partway through because removing `/Library/PrivilegedHelperTools/com.docker.*` requires `sudo`, and this machine has no passwordless-sudo rule or Touch ID sudo configured, so it cannot complete non-interactively (from an agent, script, or cron).
   - **Fix applied**: enabled `autoDownloadUpdates` in `~/Library/Group Containers/group.com.docker/settings.json` so Docker Desktop pre-downloads new versions itself. You still need to click "Update" once via the Docker Desktop GUI (or `Docker menu > Check for Updates`) when it's running, which uses Docker's own privileged-helper auth (a normal macOS password/Touch ID dialog) instead of Homebrew/sudo.
   - **Optional, not applied**: add a narrowly-scoped sudoers rule (e.g. via `sudo visudo -f /etc/sudoers.d/homebrew-docker-desktop`) granting passwordless root for the specific `rm`/`launchctl` commands the docker-desktop cask needs, so `brew upgrade --cask docker-desktop` never prompts. This is a standing security change (passwordless root for those commands, for this user) and should only be done deliberately, not as routine maintenance.
