@@ -2,6 +2,25 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
+			"label": "HAP: Upgrade Docker Desktop",
+			"type": "shell",
+			"command": "source /Users/bennyskov/Projects/HAP/.venv/bin/activate && sudo -v && brew upgrade --cask docker-desktop && brew outdated --cask docker-desktop",
+			"options": {
+				"shell": {
+					"executable": "/bin/bash",
+					"args": ["-c"]
+				}
+			},
+			"isBackground": false,
+			"problemMatcher": [],
+			"presentation": {
+				"reveal": "always",
+				"focus": true,
+				"panel": "dedicated",
+				"clear": false
+			}
+		},
+		{
 			"label": "noop",
 			"type": "shell",
 			"command": "true",
