@@ -58,7 +58,7 @@ Report every step that could not be completed and why; do not imply a failed or 
 - **Verify Runtime**:
   - `hermes --version`
   - `hermes gateway restart`
-  - `hermes status | awk '/◆ Environment/{show=1} /◆ API Keys/{show=0} /◆ Gateway Service/{show=1} /◆ Scheduled Jobs/{show=0} show'`
+  - `hermes status --full | awk '/◆ Environment/{show=1} /◆ API Keys/{show=0} /◆ Gateway Service/{show=1} /◆ Scheduled Jobs/{show=0} show'` (plain `hermes status` now prints a condensed summary that omits the `◆`-prefixed sections; use `--full` to filter them)
 - **Validate Environment**:
   - Confirm `~/.zshrc` sources `$HOME/.config/hermes/env.zsh`.
   - Ensure project `.venv` auto-activates correctly.
@@ -114,7 +114,7 @@ hermes --version
 hermes gateway stop
 sleep 2
 hermes gateway start
-hermes status | awk '/◆ Gateway Service/{show=1; next} /◆ Scheduled Jobs/{show=0} show'
+hermes status --full | awk '/◆ Gateway Service/{show=1; next} /◆ Scheduled Jobs/{show=0} show'
 ```
 
 ### **1.8.3 Docker Desktop upgrade requires administrator authentication**

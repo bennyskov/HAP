@@ -23,8 +23,6 @@ These carry no project name and must match HAP exactly:
 - `.github/instructions/copilot-markdown.instructions.md`
 - `.github/instructions/copilot-security.instructions.md`
 - `.github/instructions/copilot-testings.instructions.md`
-- `.github/docs/vscode-copilot-standard.document.md`
-- `.github/docs/base-hermes-overview.document.md`
 
 ### **1.2.2 Templated (copy, then substitute the project name)**
 
@@ -32,6 +30,7 @@ These are structurally identical to HAP's version but reference the project name
 
 - `.github/instructions/copilot-coding.instructions.md`
 - `.github/instructions/copilot-standard.instructions.md`
+- `.github/docs/vscode-copilot-standard.document.md` (substitute the project name and rewrite the absolute file-link paths to the target project's own directory)
 - `.github/docs/*-self-learning.document.md` (rename to `<project>-self-learning.document.md`)
 - `.github/agents/*-default.agent.md` (rename to `<project>-default.agent.md`)
 
@@ -41,8 +40,9 @@ These describe the project's own mission and must not be overwritten by a sync:
 
 - `.github/copilot-instructions.md` (mission, sources of truth, project-specific overrides section)
 - `.github/docs/*-objective.document.md`
+- `.github/docs/base-hermes-overview.document.md` — HAP's copy is a living runtime snapshot updated by `hap-maintenance`; a subproject's copy should be a short, project-authored pointer back to HAP's install (see BUD's version for the established pattern), not a synced duplicate. Do not propagate HAP's copy verbatim into a subproject.
 - `.github/skills/*` (project-specific workflows)
-- Any project-specific `.github/instructions/*.instructions.md` beyond the shared six
+- Any project-specific `.github/instructions/*.instructions.md` beyond the shared four
 
 ## **1.3 Sync flow (existing subproject, e.g. BUD)**
 
