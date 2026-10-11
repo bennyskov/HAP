@@ -38,13 +38,27 @@ STATUS_ERROR = "error"
 
 
 @dataclass
+class Row:
+    """One line in a card; status/reason mark the row that caused a WARN/ERROR."""
+
+    label: str
+    value: str
+    status: str = "ok"
+    reason: str = ""
+
+
+@dataclass
 class Section:
     """One card in the dashboard."""
 
     title: str
     status: str
-    rows: list[tuple[str, str]] = field(default_factory=list)
+    rows: list[Row] = field(default_factory=list)
     note: str | None = None
+
+    def add(self, label: str, value: str, status: str = "ok", reason: str = "") -> None:
+        self.rows.append(Row(label, value, status, reason))
+        self.status = worst(self.status, status)
 
 
 def run(cmd: list[str], timeout: int = 20, env: dict | None = None) -> subprocess.CompletedProcess | None:
@@ -73,34 +87,41 @@ def worst(*statuses: str) -> str:
 # OS status
 # ----------------------------------------------------------------------------
 def get_os_section() -> Section:
-    rows = [
-        ("Hostname", socket.gethostname()),
-        ("System", f"{platform.system()} {platform.release()}"),
-        ("Machine", platform.machine()),
-    ]
+    section = Section("OS Status", STATUS_OK)
+    section.add("Hostname", socket.gethostname())
+    section.add("System", f"{platform.system()} {platform.release()}")
+    section.add("Machine", platform.machine())
     if platform.system() == "Darwin":
         sw_vers = run(["sw_vers", "-productVersion"])
         if sw_vers and sw_vers.returncode == 0:
-            rows.append(("macOS version", sw_vers.stdout.strip()))
+            section.add("macOS version", sw_vers.stdout.strip())
 
-    boot_time = datetime.fromtimestamp(psutil.boot_time())
-    uptime = datetime.now() - boot_time
-    rows.append(("Uptime", str(timedelta(seconds=int(uptime.total_seconds())))))
+    uptime = datetime.now() - datetime.fromtimestamp(psutil.boot_time())
+    section.add("Uptime", str(timedelta(seconds=int(uptime.total_seconds()))))
 
     cpu_count = psutil.cpu_count(logical=True) or 1
     try:
         load1, load5, load15 = os.getloadavg()
-        rows.append(("Load average (1/5/15m)", f"{load1:.2f} / {load5:.2f} / {load15:.2f}"))
+        load_limit = cpu_count * 2
+        busy = load1 >= load_limit
+        section.add(
+            "Load average (1/5/15m)",
+            f"{load1:.2f} / {load5:.2f} / {load15:.2f}",
+            STATUS_WARN if busy else STATUS_OK,
+            f"1-min load ≥ {load_limit} (2 × {cpu_count} CPUs)" if busy else "",
+        )
     except (AttributeError, OSError):
-        load1 = 0.0
+        pass
 
     mem = psutil.virtual_memory()
-    rows.append(("Memory used", f"{mem.percent:.0f}% of {mem.total / 1e9:.1f} GB"))
-
-    status = STATUS_OK
-    if mem.percent >= 90 or load1 >= cpu_count * 2:
-        status = STATUS_WARN
-    return Section("OS Status", status, rows)
+    high_mem = mem.percent >= 90
+    section.add(
+        "Memory used",
+        f"{mem.percent:.0f}% of {mem.total / 1e9:.1f} GB",
+        STATUS_WARN if high_mem else STATUS_OK,
+        "memory use ≥ 90%" if high_mem else "",
+    )
+    return section
 
 
 # ----------------------------------------------------------------------------
@@ -121,12 +142,13 @@ def _is_noise_mount(mountpoint: str, fstype: str) -> bool:
 
 
 def get_disk_section() -> Section:
-    rows: list[tuple[str, str]] = []
-    status = STATUS_OK
+    section = Section("Disk Status", STATUS_OK)
     try:
         partitions = psutil.disk_partitions(all=False)
     except OSError:
-        return Section("Disk Status", STATUS_ERROR, [], note="Unable to read disk partitions.")
+        section.status = STATUS_ERROR
+        section.note = "Unable to read disk partitions."
+        return section
 
     candidates = [p for p in partitions if not _is_noise_mount(p.mountpoint, p.fstype)]
     # On macOS, "/" is the read-only sealed system volume and "/System/Volumes/Data"
@@ -140,181 +162,202 @@ def get_disk_section() -> Section:
         except (PermissionError, OSError):
             continue
         percent = usage.percent
-        part_status = STATUS_OK
         if percent >= 90:
-            part_status = STATUS_ERROR
+            part_status, reason = STATUS_ERROR, "≥ 90% full"
         elif percent >= 80:
-            part_status = STATUS_WARN
-        status = worst(status, part_status)
+            part_status, reason = STATUS_WARN, "≥ 80% full"
+        else:
+            part_status, reason = STATUS_OK, ""
         label = "Macintosh HD (Data)" if part.mountpoint == "/System/Volumes/Data" else part.mountpoint
-        rows.append((
+        section.add(
             f"{label} ({part.fstype})",
-            f"{percent:.0f}% used — {usage.free / 1e9:.1f} GB free of {usage.total / 1e9:.1f} GB",
-        ))
+            f"{percent:.1f}% used — {usage.free / 1e9:.1f} GB free of {usage.total / 1e9:.1f} GB",
+            part_status,
+            reason,
+        )
 
-    if not rows:
-        return Section("Disk Status", STATUS_WARN, [], note="No readable partitions found.")
-    return Section("Disk Status", status, rows)
+    if not section.rows:
+        section.status = STATUS_WARN
+        section.note = "No readable partitions found."
+    return section
 
 
 # ----------------------------------------------------------------------------
 # Homebrew status
 # ----------------------------------------------------------------------------
 def get_brew_section() -> Section:
+    section = Section("Homebrew", STATUS_OK)
     if not shutil.which("brew"):
-        return Section("Homebrew", STATUS_ERROR, [], note="brew not found on PATH.")
+        section.status = STATUS_ERROR
+        section.note = "brew not found on PATH."
+        return section
 
     env = brew_env()
-    rows = []
     version = run(["brew", "--version"], env=env)
     if version and version.returncode == 0:
-        rows.append(("Version", version.stdout.splitlines()[0].strip()))
+        section.add("Version", version.stdout.splitlines()[0].strip())
 
     formulae = run(["brew", "list", "--formula"], env=env)
     casks = run(["brew", "list", "--cask"], env=env)
-    formula_count = len(formulae.stdout.split()) if formulae and formulae.returncode == 0 else None
-    cask_count = len(casks.stdout.split()) if casks and casks.returncode == 0 else None
-    if formula_count is not None:
-        rows.append(("Installed formulae", str(formula_count)))
-    if cask_count is not None:
-        rows.append(("Installed casks", str(cask_count)))
+    if formulae and formulae.returncode == 0:
+        section.add("Installed formulae", str(len(formulae.stdout.split())))
+    if casks and casks.returncode == 0:
+        section.add("Installed casks", str(len(casks.stdout.split())))
 
     outdated = run(["brew", "outdated", "--quiet"], timeout=60, env=env)
-    status = STATUS_OK
     if outdated and outdated.returncode == 0:
-        pending = [line for line in outdated.stdout.splitlines() if line.strip()]
-        rows.append(("Outdated packages", str(len(pending)) if pending else "0 — up to date"))
+        pending = [line.strip() for line in outdated.stdout.splitlines() if line.strip()]
         if pending:
-            status = STATUS_WARN
+            section.add("Outdated packages", f"{len(pending)} — {', '.join(pending)}",
+                        STATUS_WARN, "upgrades available")
+        else:
+            section.add("Outdated packages", "0 — up to date")
     else:
-        rows.append(("Outdated packages", "check failed"))
-        status = STATUS_WARN
-
-    return Section("Homebrew", status, rows)
+        section.add("Outdated packages", "check failed", STATUS_WARN, "brew outdated failed")
+    return section
 
 
 # ----------------------------------------------------------------------------
 # Python / venv status
 # ----------------------------------------------------------------------------
 def get_python_section() -> Section:
-    rows = [
-        ("Interpreter", sys.version.split()[0]),
-        ("Executable", sys.executable),
-    ]
-    status = STATUS_OK
+    section = Section("Python / venv", STATUS_OK)
+    section.add("Interpreter", sys.version.split()[0])
+    section.add("Executable", sys.executable)
     for repo in TRACKED_REPOS:
-        venv_path = PROJECTS_DIR / repo / ".venv"
-        exists = venv_path.is_dir()
-        rows.append((f"{repo} .venv", "present" if exists else "missing"))
-        if not exists:
-            status = STATUS_WARN
-    return Section("Python / venv", status, rows)
+        if (PROJECTS_DIR / repo / ".venv").is_dir():
+            section.add(f"{repo} .venv", "present")
+        else:
+            section.add(f"{repo} .venv", "missing", STATUS_WARN, "no .venv in project")
+    return section
 
 
 # ----------------------------------------------------------------------------
 # Hermes status
 # ----------------------------------------------------------------------------
 def get_hermes_section() -> Section:
+    section = Section("Hermes", STATUS_OK)
     if not shutil.which("hermes"):
-        return Section("Hermes", STATUS_ERROR, [], note="hermes command not found on PATH.")
-
-    rows = []
-    status = STATUS_OK
+        section.status = STATUS_ERROR
+        section.note = "hermes command not found on PATH."
+        return section
 
     version = run(["hermes", "--version"])
     if version and version.returncode == 0:
         first_line = version.stdout.splitlines()[0].strip() if version.stdout else "unknown"
-        rows.append(("Version", first_line))
-        up_to_date = "up to date" in version.stdout.lower()
-        rows.append(("Update status", "up to date" if up_to_date else "update available"))
-        if not up_to_date:
-            status = STATUS_WARN
+        section.add("Version", first_line)
+        if "up to date" in version.stdout.lower():
+            section.add("Update status", "up to date")
+        else:
+            section.add("Update status", "update available", STATUS_WARN, "newer Hermes available")
     else:
-        rows.append(("Version", "unavailable"))
-        status = STATUS_WARN
+        section.add("Version", "unavailable", STATUS_WARN, "hermes --version failed")
 
     hstatus = run(["hermes", "status"])
     if hstatus and hstatus.returncode == 0:
-        out = hstatus.stdout
+        lines = hstatus.stdout.splitlines()
         for label, key in (("Model", "Model:"), ("Provider", "Provider:"), ("Gateway", "Gateway:"), ("Jobs", "Jobs:")):
-            for line in out.splitlines():
-                if key in line:
-                    rows.append((label, line.split(key, 1)[1].strip()))
-                    break
-        if "running" not in out.lower():
-            status = worst(status, STATUS_WARN)
+            value = next((line.split(key, 1)[1].strip() for line in lines if key in line), None)
+            if value is None:
+                if label == "Gateway":
+                    section.add("Gateway", "not reported", STATUS_WARN, "gateway state missing")
+                continue
+            if label == "Gateway" and "running" not in value.lower():
+                section.add(label, value, STATUS_WARN, "gateway not running")
+            else:
+                section.add(label, value)
     else:
-        rows.append(("Gateway", "status check failed"))
-        status = worst(status, STATUS_WARN)
-
-    return Section("Hermes", status, rows)
+        section.add("Gateway", "status check failed", STATUS_WARN, "hermes status failed")
+    return section
 
 
 # ----------------------------------------------------------------------------
 # Git repo status (HAP / BUD / STRM)
 # ----------------------------------------------------------------------------
 def get_git_section() -> Section:
-    rows = []
-    status = STATUS_OK
+    section = Section("Git Repos", STATUS_OK)
     for repo in TRACKED_REPOS:
         repo_path = PROJECTS_DIR / repo
         if not repo_path.is_dir():
-            rows.append((repo, "directory not found"))
-            status = worst(status, STATUS_WARN)
+            section.add(repo, "directory not found", STATUS_WARN, "repo folder missing")
             continue
         result = run(["git", "-C", str(repo_path), "status", "--short", "--branch"])
         if not result or result.returncode != 0:
-            rows.append((repo, "not a git repo / status failed"))
-            status = worst(status, STATUS_WARN)
+            section.add(repo, "not a git repo / status failed", STATUS_WARN, "git status failed")
             continue
         lines = result.stdout.splitlines()
         branch_line = lines[0] if lines else ""
         dirty_count = len(lines) - 1 if lines else 0
-        repo_status = STATUS_OK
         details = branch_line.replace("## ", "")
+        reasons = []
         if dirty_count:
             details += f" — {dirty_count} changed file(s)"
-            repo_status = STATUS_WARN
+            reasons.append("uncommitted changes")
         if "ahead" in branch_line or "behind" in branch_line:
-            repo_status = STATUS_WARN
+            reasons.append("not in sync with remote")
         if "..." not in branch_line:
             details += " (no remote tracking)"
-        status = worst(status, repo_status)
-        rows.append((repo, details or "clean"))
-    return Section("Git Repos", status, rows)
+        section.add(repo, details or "clean", STATUS_WARN if reasons else STATUS_OK, ", ".join(reasons))
+    return section
 
 
 # ----------------------------------------------------------------------------
 # HTML rendering
 # ----------------------------------------------------------------------------
 STATUS_LABEL = {STATUS_OK: "OK", STATUS_WARN: "WARN", STATUS_ERROR: "ERROR"}
+STATUS_ICON = {STATUS_WARN: "⚠", STATUS_ERROR: "✖"}
 
 CSS = """
 body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #15181d; color: #e6e6e6; margin: 0; padding: 2rem; }
 h1 { font-size: 1.4rem; margin-bottom: 0.2rem; }
-.meta { color: #9aa4b2; margin-bottom: 1.5rem; font-size: 0.9rem; }
+.meta { color: #9aa4b2; margin-bottom: 1rem; font-size: 0.9rem; }
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1rem; }
 .card { background: #1e232b; border-radius: 10px; padding: 1rem 1.25rem; border-left: 5px solid #555; }
 .card.ok { border-left-color: #3fb950; }
 .card.warn { border-left-color: #d29922; }
 .card.error { border-left-color: #f85149; }
 .card h2 { margin: 0 0 0.6rem 0; font-size: 1.05rem; display: flex; justify-content: space-between; align-items: center; }
-.badge { font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 999px; letter-spacing: 0.05em; }
+.badge { font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 999px; letter-spacing: 0.05em; white-space: nowrap; }
 .badge.ok { background: rgba(63,185,80,0.15); color: #3fb950; }
 .badge.warn { background: rgba(210,153,34,0.15); color: #d29922; }
 .badge.error { background: rgba(248,81,73,0.15); color: #f85149; }
 table { width: 100%; border-collapse: collapse; font-size: 0.85rem; table-layout: fixed; }
-td { padding: 0.25rem 0; vertical-align: top; overflow-wrap: anywhere; }
-td.label { color: #9aa4b2; width: 40%; padding-right: 0.75rem; }
+td { padding: 0.25rem 0.4rem; vertical-align: top; overflow-wrap: anywhere; }
+td.label { color: #9aa4b2; width: 40%; }
+tr.warn td { background: rgba(210,153,34,0.12); }
+tr.error td { background: rgba(248,81,73,0.15); }
+tr.warn td.label, tr.error td.label { font-weight: 600; }
+tr.warn td.label { color: #d29922; box-shadow: inset 3px 0 0 #d29922; }
+tr.error td.label { color: #f85149; box-shadow: inset 3px 0 0 #f85149; }
+.reason { display: block; font-size: 0.75rem; margin-top: 0.15rem; }
+tr.warn .reason { color: #d29922; }
+tr.error .reason { color: #f85149; }
 .note { color: #9aa4b2; font-size: 0.85rem; font-style: italic; }
+.summary { background: #1e232b; border-radius: 10px; padding: 0.75rem 1.25rem; margin-bottom: 1.25rem; font-size: 0.9rem; }
+.summary h2 { font-size: 0.95rem; margin: 0 0 0.4rem 0; }
+.summary ul { margin: 0; padding-left: 1.2rem; }
+.summary li { margin: 0.2rem 0; }
+.summary li.warn { color: #d29922; }
+.summary li.error { color: #f85149; }
+.summary .ok { color: #3fb950; }
 """
 
 
-def render_card(section: Section) -> str:
-    rows_html = "".join(
-        f"<tr><td class='label'>{html.escape(label)}</td><td>{html.escape(value)}</td></tr>"
-        for label, value in section.rows
+def render_row(row: Row) -> str:
+    icon = STATUS_ICON.get(row.status, "")
+    label = f"{icon} {row.label}" if icon else row.label
+    reason = (
+        f"<span class='reason'>{STATUS_LABEL[row.status]}: {html.escape(row.reason)}</span>"
+        if row.status != STATUS_OK else ""
     )
+    return (
+        f"<tr class='{row.status}'><td class='label'>{html.escape(label)}</td>"
+        f"<td>{html.escape(row.value)}{reason}</td></tr>"
+    )
+
+
+def render_card(section: Section) -> str:
+    rows_html = "".join(render_row(r) for r in section.rows)
     note_html = f"<p class='note'>{html.escape(section.note)}</p>" if section.note else ""
     badge = STATUS_LABEL[section.status]
     return f"""
@@ -323,6 +366,30 @@ def render_card(section: Section) -> str:
       <table>{rows_html}</table>
       {note_html}
     </div>"""
+
+
+def problems(sections: list[Section]) -> list[tuple[str, str]]:
+    """List (status, message) for every row or card that is not OK, worst first."""
+    found = []
+    for s in sections:
+        for r in s.rows:
+            if r.status != STATUS_OK:
+                found.append((r.status, f"{s.title} → {r.label}: {r.value} ({r.reason})"))
+        if s.note and s.status != STATUS_OK:
+            found.append((s.status, f"{s.title}: {s.note}"))
+    return sorted(found, key=lambda p: 0 if p[0] == STATUS_ERROR else 1)
+
+
+def render_summary(sections: list[Section]) -> str:
+    items = problems(sections)
+    if not items:
+        return "<div class='summary'><span class='ok'>✔ All checks OK</span></div>"
+    lis = "".join(
+        f"<li class='{status}'>{STATUS_ICON[status]} <strong>{STATUS_LABEL[status]}</strong> "
+        f"{html.escape(msg)}</li>"
+        for status, msg in items
+    )
+    return f"<div class='summary'><h2>What is causing WARN / ERROR</h2><ul>{lis}</ul></div>"
 
 
 def render_html(sections: list[Section]) -> str:
@@ -339,6 +406,7 @@ def render_html(sections: list[Section]) -> str:
 <body>
 <h1>HAP Workspace Status</h1>
 <p class="meta">Generated {generated} on {socket.gethostname()} &middot; overall: <strong>{STATUS_LABEL[overall]}</strong></p>
+{render_summary(sections)}
 <div class="grid">{cards}</div>
 </body>
 </html>"""
@@ -370,6 +438,9 @@ def main() -> int:
     overall = worst(*(s.status for s in sections))
     for section in sections:
         print(f"  [{STATUS_LABEL[section.status]:>5}] {section.title}")
+        for row in section.rows:
+            if row.status != STATUS_OK:
+                print(f"          -> {row.label}: {row.value} ({row.reason})")
     return 0 if overall != STATUS_ERROR else 1
 
 

@@ -85,7 +85,7 @@ Every invocation mode ends by (re)generating the HTML status dashboard (section 
   python3 /Users/bennyskov/Projects/HAP/src/status_report.py
   ```
 - This runs read-only checks only (OS, disk, Homebrew, Python/venv, Hermes, and HAP/BUD/STRM git status) and writes a single self-contained file to `logs/status-report.html` (git-ignored, regenerated in place each run — never commit it).
-- Report the output path and the per-section OK/WARN/ERROR summary the script prints; do not treat a WARN/ERROR section as something to silently fix — surface it like any other maintenance finding.
+- Report the output path and the per-section OK/WARN/ERROR summary the script prints. Each non-OK row is marked in the HTML (and listed in the "What is causing WARN / ERROR" box at the top) with the reason, so name the exact row when reporting. Do not treat a WARN/ERROR section as something to silently fix — surface it like any other maintenance finding.
 - This script is read-only by design (it disables Homebrew's own auto-update network call); do not add update/write actions to it from this flow.
 
 ## **1.7 Safety Rules**
