@@ -41,6 +41,8 @@ The skill can be invoked with a short natural-language qualifier; no special com
 
 Report every step that could not be completed and why; do not imply a failed or skipped update succeeded.
 
+Every invocation mode ends by (re)generating the HTML status dashboard (section 1.6.4) so there is always a current, browsable snapshot of the workspace after any check or update.
+
 ## **1.6 Standard Maintenance Flow**
 
 ### **1.6.1 BASE: System and Runtime Maintenance**
@@ -76,6 +78,15 @@ Report every step that could not be completed and why; do not imply a failed or 
 ### **1.6.3 Documentation and Cleanup**
 - **Sync API Keys**: If keys changed, update `config/KEYS.md` to match `~/.config/hermes/env.zsh`. Never commit this file — it must stay in `.gitignore`.
 - **Update Docs**: Add concise updates to `.github/docs/base-hermes-overview.document.md` and other relevant framework documents.
+
+### **1.6.4 Status Dashboard**
+- After any `check`, `update`, `hap`, or `all` pass, regenerate the HTML status dashboard:
+  ```bash
+  python3 /Users/bennyskov/Projects/HAP/src/status_report.py
+  ```
+- This runs read-only checks only (OS, disk, Homebrew, Python/venv, Hermes, and HAP/BUD/STRM git status) and writes a single self-contained file to `logs/status-report.html` (git-ignored, regenerated in place each run — never commit it).
+- Report the output path and the per-section OK/WARN/ERROR summary the script prints; do not treat a WARN/ERROR section as something to silently fix — surface it like any other maintenance finding.
+- This script is read-only by design (it disables Homebrew's own auto-update network call); do not add update/write actions to it from this flow.
 
 ## **1.7 Safety Rules**
 - Never print secret values in logs or docs.
@@ -141,3 +152,4 @@ brew outdated --cask docker-desktop
 - Software versions changed and any upgrades still pending, including administrator-authentication handoffs.
 - Pass/fail status for environment, venv, and API checks.
 - Updated overview notes when applicable.
+- Path to the regenerated HTML status dashboard (`logs/status-report.html`) and its per-section status summary.

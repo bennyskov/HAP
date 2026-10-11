@@ -36,7 +36,15 @@ None of them, individually or combined, cover "is there uncommitted or unpushed 
 
 2. **Standard drift check** — run `hap-copilot-standard-check` against HAP. If HAP's shared/templated files changed since the last propagate, also run it against BUD and STRM to see whether they've drifted out of sync.
 3. **Runtime check** — run `hap-maintenance check` (read-only: `hermes status`, venv activation, API connectivity). Do not run the `update` flow in the daily tier.
-4. **Report**: a short pass/fail summary per repo and per check. Do not auto-commit, auto-push, or auto-propagate in this tier — surface findings and let the next tier (or an explicit user request) act on them.
+4. **Workspace status dashboard** — always regenerate the HTML dashboard as the last check, so it reflects the current state:
+
+   ```bash
+   source /Users/bennyskov/Projects/HAP/.venv/bin/activate
+   python3 /Users/bennyskov/Projects/HAP/src/status_report.py
+   ```
+
+   This writes `logs/status-report.html` (git-ignored; see `hap-maintenance` section 1.6.4). Do not skip this step, even when the other checks find nothing. If the script fails, report the failure as a finding.
+5. **Report**: a short pass/fail summary per repo and per check, plus the dashboard path and its per-section OK/WARN/ERROR summary. Do not auto-commit, auto-push, or auto-propagate in this tier. Surface findings and let the next tier (or an explicit user request) act on them.
 
 ### **1.3.2 Periodic tier (heavier, run weekly or before a significant work session)**
 
@@ -53,6 +61,7 @@ None of them, individually or combined, cover "is there uncommitted or unpushed 
 
    If a repo has no remote yet (e.g. STRM today) or a push is blocked (secret scanning, diverged history), stop and use `hap-sync-copied-library` instead of forcing it here.
 4. Re-run the daily tier's git status sweep to confirm every repo is clean and up to date with its remote.
+5. Regenerate the workspace status dashboard (daily tier step 4) so it shows the state after the periodic actions.
 
 ## **1.4 Decision flow**
 
@@ -84,4 +93,5 @@ Return a short routine report:
 - Per-repo git status (clean / dirty / ahead / behind / no remote).
 - Standard drift findings, if any, and whether they were propagated.
 - Runtime/software check results, if the periodic tier ran.
+- Path to the regenerated HTML status dashboard (`logs/status-report.html`) and its per-section summary.
 - Any blocked or deferred step (auth-gated upgrade, missing remote, secret-scanning block) and what it needs next.
