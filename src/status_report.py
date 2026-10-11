@@ -31,6 +31,8 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 PROJECTS_DIR = REPO_ROOT.parent
 TRACKED_REPOS = ["HAP", "BUD", "STRM"]
 DEFAULT_OUTPUT = REPO_ROOT / "logs" / "status-report.html"
+DISK_WARN_PCT = 90
+DISK_ERROR_PCT = 95
 
 STATUS_OK = "ok"
 STATUS_WARN = "warn"
@@ -162,10 +164,10 @@ def get_disk_section() -> Section:
         except (PermissionError, OSError):
             continue
         percent = usage.percent
-        if percent >= 90:
-            part_status, reason = STATUS_ERROR, "≥ 90% full"
-        elif percent >= 80:
-            part_status, reason = STATUS_WARN, "≥ 80% full"
+        if percent >= DISK_ERROR_PCT:
+            part_status, reason = STATUS_ERROR, f"≥ {DISK_ERROR_PCT}% full"
+        elif percent >= DISK_WARN_PCT:
+            part_status, reason = STATUS_WARN, f"≥ {DISK_WARN_PCT}% full"
         else:
             part_status, reason = STATUS_OK, ""
         label = "Macintosh HD (Data)" if part.mountpoint == "/System/Volumes/Data" else part.mountpoint
