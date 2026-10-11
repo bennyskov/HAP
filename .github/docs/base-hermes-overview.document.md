@@ -38,3 +38,5 @@ Updated by the `hap-maintenance` skill's "Documentation and Cleanup" step. Refle
 ## **1.5 Maintenance Cadence**
 
 Run `/hap-maintenance` periodically to keep Homebrew packages, Hermes, and the active Ollama model current, clear stale Python bytecode caches, and re-validate the shell/`.venv` environment. The default invocation runs BASE maintenance; use `hap` or `all` to include framework alignment and the Copilot customization standard check.
+
+Use `hap-daily-routine` as the entry point for the recurring cross-project pass: it sequences a cheap daily status/drift check (git status across HAP/BUD/STRM, `hap-copilot-standard-check`, `hap-maintenance check`) and a heavier periodic pass (`hap-maintenance`, `hap-propagate-standard` when drift is found, and committing/pushing each repo) without duplicating any of their logic.
