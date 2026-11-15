@@ -66,17 +66,18 @@ class StatusReportPathsTest(unittest.TestCase):
 
     def test_should_link_home_and_architecture_to_their_new_locations(self) -> None:
         home_links = links_in(ROOT / "www" / "index.html")
-        architecture_links = links_in(ROOT / "architecture.html")
+        architecture_links = links_in(ROOT / "www" / "architecture.html")
 
         self.assertTrue({
-            "../architecture.html",
+            "architecture.html",
             "status-report.html",
             "status_report_backup.html",
         }.issubset(home_links))
         self.assertTrue({
-            "www/index.html",
-            "www/status-report.html",
-            "www/status_report_backup.html",
+            "index.html",
+            "architecture.html",
+            "status-report.html",
+            "status_report_backup.html",
         }.issubset(architecture_links))
 
 
@@ -84,6 +85,7 @@ class WebGitIgnoreTest(unittest.TestCase):
     def test_should_leave_www_content_visible_without_changing_other_ignores(self) -> None:
         web_paths = [
             "www/index.html",
+            "www/architecture.html",
             "www/status-report.html",
             "www/status_report_backup.html",
             "www/nested/snapshot.log",

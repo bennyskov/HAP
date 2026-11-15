@@ -18,7 +18,7 @@ register, and the two pages that visualize it.
 - [index.html](../../../www/index.html) — the HAP home page. Links to the
   architecture page and both status reports
   (`www/status-report.html`, `www/status_report_backup.html`).
-- [architecture.html](../../../architecture.html) — the HAP architecture:
+- [architecture.html](../../../www/architecture.html) — the HAP architecture:
   layers, the daily/periodic flowchart, the reestablish flow, the skills map,
   and the requirements register.
 
@@ -40,7 +40,7 @@ script, page, schedule, or rule — not a one-off question):
 2. **Register the request** — add an item to **1.5** with the date, the
    request in short form, and the skill reference(s) where it now lives.
 3. **Update the architecture page** — add or adjust the matching nodes in
-   `architecture.html`. Badge text, `data-section`, `data-step` and
+   `www/architecture.html`. Badge text, `data-section`, `data-step` and
    `data-name` must match the skill exactly.
 4. **Update the home page** — when a new page or report is added, link it from
    `www/index.html`.
@@ -108,6 +108,9 @@ User requests, newest last, with where each one is captured:
 10. **Keep web content visible to Git** — 2026-11-15: do not git-ignore
     content in `www/`. Captured in this skill, 1.7 step 2, and
     `hap-daily-routine` 1.3.3 step 2.
+11. **Architecture page directory** — 2026-11-15: move the architecture page
+    into `www/` and update its links and reference checker. Captured in this
+    skill, 1.7 step 1, and `src/architecture_refs.py`.
 
 ## **1.6 Guardrails**
 
@@ -124,11 +127,11 @@ User requests, newest last, with where each one is captured:
 
 ## **1.7 Web page locations**
 
-1. **Keep the home and reports in www** — keep the home page at
-   `www/index.html` and generate the workspace and backup reports at
-   `www/status-report.html` and `www/status_report_backup.html`. The
-   architecture page remains at the repository root. Keep page links and the
-   report generators aligned with these locations.
+1. **Keep the pages and reports in www** — keep the home and architecture
+   pages at `www/index.html` and `www/architecture.html`, and generate the
+   workspace and backup reports at `www/status-report.html` and
+   `www/status_report_backup.html`. Keep navigation, skill links, report
+   generators and the reference checker aligned with these locations.
 2. **Do not ignore www content** — keep all `www/` paths visible to Git,
    including nested paths matching general ignore rules. Review content before
    committing and never commit secrets or generated reports.

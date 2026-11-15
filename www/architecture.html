@@ -124,10 +124,10 @@
 <body>
   <main>
     <nav class="topnav" aria-label="HAP pages">
-      <a href="www/index.html">Home</a>
+      <a href="index.html">Home</a>
       <a href="architecture.html" aria-current="page">Architecture</a>
-      <a href="www/status-report.html">Workspace status</a>
-      <a href="www/status_report_backup.html">Backup status</a>
+      <a href="status-report.html">Workspace status</a>
+      <a href="status_report_backup.html">Backup status</a>
     </nav>
 
     <div class="eyebrow">HAP workspace</div>
@@ -170,7 +170,7 @@
         <h3>Pages and reports</h3>
         <ul>
           <li><code>www/index.html</code> — home</li>
-          <li><code>architecture.html</code> — this page</li>
+          <li><code>www/architecture.html</code> — this page</li>
           <li><code>www/status-report.html</code> (generated)</li>
           <li><code>www/status_report_backup.html</code> (generated)</li>
         </ul>
@@ -199,81 +199,81 @@
     <h2>Daily routine flowchart</h2>
     <p class="lead">Entry point: <code>hap-daily-routine</code>. Green boxes are the steps inside the called skill.</p>
     <div class="flow">
-      <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.1" data-step="1" data-name="Disk cleanup">
+      <a class="node" href="../.github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.1" data-step="1" data-name="Disk cleanup">
         <span class="ref">1.3.1 step 1 · Disk cleanup</span><span class="skill">hap-daily-routine</span>
         <span class="desc">Delete old pip/Homebrew (&gt;7 days) and app cache files (&gt;30 days) in <code>~/Library/Caches</code>.</span>
       </a>
       <div class="arrow"></div>
       <div>
-        <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.1" data-step="2" data-name="Daily backup">
+        <a class="node" href="../.github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.1" data-step="2" data-name="Daily backup">
           <span class="ref">1.3.1 step 2 · Daily backup</span><span class="skill">hap-daily-routine</span>
           <span class="desc">Runs the <code>hap-daily-backup</code> skill:</span>
         </a>
         <div class="sub">
-          <a class="node" href=".github/skills/hap-daily-backup/SKILL.md" data-skill="hap-daily-backup" data-section="1.3" data-step="1" data-name="Force a manual Time Machine start">
+          <a class="node" href="../.github/skills/hap-daily-backup/SKILL.md" data-skill="hap-daily-backup" data-section="1.3" data-step="1" data-name="Force a manual Time Machine start">
             <span class="ref">1.3 step 1 · Force a manual Time Machine start</span><span class="skill">hap-daily-backup</span>
           </a>
-          <a class="node" href=".github/skills/hap-daily-backup/SKILL.md" data-skill="hap-daily-backup" data-section="1.3" data-step="2" data-name="Copy new/touched iCloud files">
+          <a class="node" href="../.github/skills/hap-daily-backup/SKILL.md" data-skill="hap-daily-backup" data-section="1.3" data-step="2" data-name="Copy new/touched iCloud files">
             <span class="ref">1.3 step 2 · Copy new/touched iCloud files</span><span class="skill">hap-daily-backup</span>
             <span class="desc">iCloud <code>PRIVAT</code> &rarr; <code>backup shared/PRIVAT</code>, never deletes.</span>
           </a>
-          <a class="node" href=".github/skills/hap-daily-backup/SKILL.md" data-skill="hap-daily-backup" data-section="1.3" data-step="3" data-name="Generate the backup dashboard">
+          <a class="node" href="../.github/skills/hap-daily-backup/SKILL.md" data-skill="hap-daily-backup" data-section="1.3" data-step="3" data-name="Generate the backup dashboard">
             <span class="ref">1.3 step 3 · Generate the backup dashboard</span><span class="skill">hap-daily-backup</span>
             <span class="desc"><code>www/status_report_backup.html</code></span>
           </a>
         </div>
       </div>
       <div class="arrow"></div>
-      <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.1" data-step="3" data-name="Git status sweep">
+      <a class="node" href="../.github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.1" data-step="3" data-name="Git status sweep">
         <span class="ref">1.3.1 step 3 · Git status sweep</span><span class="skill">hap-daily-routine</span>
         <span class="desc">HAP, BUD, STRM: uncommitted, untracked, ahead/behind; list visible reports separately.</span>
       </a>
       <div class="arrow"></div>
-      <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.1" data-step="4" data-name="Standard drift check">
+      <a class="node" href="../.github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.1" data-step="4" data-name="Standard drift check">
         <span class="ref">1.3.1 step 4 · Standard drift check</span><span class="skill">hap-daily-routine</span>
         <span class="desc"><code>hap-copilot-standard-check</code> plus the architecture reference check.</span>
       </a>
       <div class="arrow"></div>
-      <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.1" data-step="5" data-name="Runtime check">
+      <a class="node" href="../.github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.1" data-step="5" data-name="Runtime check">
         <span class="ref">1.3.1 step 5 · Runtime check</span><span class="skill">hap-daily-routine</span>
         <span class="desc"><code>hap-maintenance check</code> (read-only): Hermes, venv, API.</span>
       </a>
       <div class="arrow"></div>
       <div>
-        <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.1" data-step="6" data-name="Daily git sync">
+        <a class="node" href="../.github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.1" data-step="6" data-name="Daily git sync">
           <span class="ref">1.3.1 step 6 · Daily git sync</span><span class="skill">hap-daily-routine</span>
           <span class="desc">Commit message starts with <code>hap-daily-routine:</code>. Uses 1.3.3 Safe git sync:</span>
         </a>
         <div class="sub">
-          <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.3" data-step="1" data-name="Preflight">
+          <a class="node" href="../.github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.3" data-step="1" data-name="Preflight">
             <span class="ref">1.3.3 step 1 · Preflight</span><span class="skill">hap-daily-routine</span>
           </a>
-          <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.3" data-step="2" data-name="Review candidates">
+          <a class="node" href="../.github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.3" data-step="2" data-name="Review candidates">
             <span class="ref">1.3.3 step 2 · Review candidates</span><span class="skill">hap-daily-routine</span>
           </a>
-          <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.3" data-step="3" data-name="Stage and commit">
+          <a class="node" href="../.github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.3" data-step="3" data-name="Stage and commit">
             <span class="ref">1.3.3 step 3 · Stage and commit</span><span class="skill">hap-daily-routine</span>
           </a>
-          <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.3" data-step="4" data-name="Push">
+          <a class="node" href="../.github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.3" data-step="4" data-name="Push">
             <span class="ref">1.3.3 step 4 · Push</span><span class="skill">hap-daily-routine</span>
           </a>
-          <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.3" data-step="5" data-name="Verify sync">
+          <a class="node" href="../.github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.3" data-step="5" data-name="Verify sync">
             <span class="ref">1.3.3 step 5 · Verify sync</span><span class="skill">hap-daily-routine</span>
           </a>
         </div>
       </div>
       <div class="arrow"></div>
-      <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.1" data-step="7" data-name="Workspace status dashboard">
+      <a class="node" href="../.github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.1" data-step="7" data-name="Workspace status dashboard">
         <span class="ref">1.3.1 step 7 · Workspace status dashboard</span><span class="skill">hap-daily-routine</span>
         <span class="desc"><code>www/status-report.html</code></span>
       </a>
       <div class="arrow"></div>
-      <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.1" data-step="8" data-name="Report">
+      <a class="node" href="../.github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.1" data-step="8" data-name="Report">
         <span class="ref">1.3.1 step 8 · Report</span><span class="skill">hap-daily-routine</span>
         <span class="desc">Summary per repo and check; both reports linked from the home page.</span>
       </a>
       <div class="arrow"></div>
-      <a class="node decision" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.4" data-name="Decision flow">
+      <a class="node decision" href="../.github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.4" data-name="Decision flow">
         <span class="ref">1.4 · Decision flow</span>
         <span class="desc">Findings, and a periodic pass or the user asked to fix now?</span>
       </a>
@@ -285,23 +285,23 @@
         <div class="periodic">
           <div class="label">yes &rarr; periodic tier (affected steps only)</div>
           <div class="flow">
-            <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.2" data-step="1" data-name="Maintenance update">
+            <a class="node" href="../.github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.2" data-step="1" data-name="Maintenance update">
               <span class="ref">1.3.2 step 1 · Maintenance update</span>
             </a>
             <div class="arrow"></div>
-            <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.2" data-step="2" data-name="Standard propagation">
+            <a class="node" href="../.github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.2" data-step="2" data-name="Standard propagation">
               <span class="ref">1.3.2 step 2 · Standard propagation</span>
             </a>
             <div class="arrow"></div>
-            <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.2" data-step="3" data-name="Periodic git sync">
+            <a class="node" href="../.github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.2" data-step="3" data-name="Periodic git sync">
               <span class="ref">1.3.2 step 3 · Periodic git sync</span>
             </a>
             <div class="arrow"></div>
-            <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.2" data-step="4" data-name="Git status recheck">
+            <a class="node" href="../.github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.2" data-step="4" data-name="Git status recheck">
               <span class="ref">1.3.2 step 4 · Git status recheck</span>
             </a>
             <div class="arrow"></div>
-            <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.2" data-step="5" data-name="Dashboard refresh">
+            <a class="node" href="../.github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.2" data-step="5" data-name="Dashboard refresh">
               <span class="ref">1.3.2 step 5 · Dashboard refresh</span>
             </a>
           </div>
@@ -312,23 +312,23 @@
     <h2>When you give a new instruction</h2>
     <p class="lead">Capture flow in <code>hap-architecture</code>, so nothing lives only in chat.</p>
     <div class="flow">
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.3" data-step="1" data-name="Capture the instruction">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.3" data-step="1" data-name="Capture the instruction">
         <span class="ref">1.3 step 1 · Capture the instruction</span><span class="skill">hap-architecture</span>
       </a>
       <div class="arrow"></div>
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.3" data-step="2" data-name="Register the request">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.3" data-step="2" data-name="Register the request">
         <span class="ref">1.3 step 2 · Register the request</span><span class="skill">hap-architecture</span>
       </a>
       <div class="arrow"></div>
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.3" data-step="3" data-name="Update the architecture page">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.3" data-step="3" data-name="Update the architecture page">
         <span class="ref">1.3 step 3 · Update the architecture page</span><span class="skill">hap-architecture</span>
       </a>
       <div class="arrow"></div>
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.3" data-step="4" data-name="Update the home page">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.3" data-step="4" data-name="Update the home page">
         <span class="ref">1.3 step 4 · Update the home page</span><span class="skill">hap-architecture</span>
       </a>
       <div class="arrow"></div>
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.3" data-step="5" data-name="Verify references">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.3" data-step="5" data-name="Verify references">
         <span class="ref">1.3 step 5 · Verify references</span><span class="skill">hap-architecture</span>
       </a>
     </div>
@@ -336,70 +336,70 @@
     <h2>Reestablish HAP and subprojects</h2>
     <p class="lead">Skills plus the git-tracked code are enough to rebuild the workspace.</p>
     <div class="flow rebuild">
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.4" data-step="1" data-name="Restore repositories">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.4" data-step="1" data-name="Restore repositories">
         <span class="ref">1.4 step 1 · Restore repositories</span><span class="skill">hap-architecture</span>
       </a>
       <div class="arrow"></div>
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.4" data-step="2" data-name="Create the virtual environment">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.4" data-step="2" data-name="Create the virtual environment">
         <span class="ref">1.4 step 2 · Create the virtual environment</span><span class="skill">hap-architecture</span>
       </a>
       <div class="arrow"></div>
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.4" data-step="3" data-name="Restore the runtime">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.4" data-step="3" data-name="Restore the runtime">
         <span class="ref">1.4 step 3 · Restore the runtime</span><span class="skill">hap-architecture</span>
       </a>
       <div class="arrow"></div>
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.4" data-step="4" data-name="Restore subproject standards">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.4" data-step="4" data-name="Restore subproject standards">
         <span class="ref">1.4 step 4 · Restore subproject standards</span><span class="skill">hap-architecture</span>
       </a>
       <div class="arrow"></div>
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.4" data-step="5" data-name="Verify the architecture">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.4" data-step="5" data-name="Verify the architecture">
         <span class="ref">1.4 step 5 · Verify the architecture</span><span class="skill">hap-architecture</span>
       </a>
       <div class="arrow"></div>
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.4" data-step="6" data-name="Run the daily routine">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.4" data-step="6" data-name="Run the daily routine">
         <span class="ref">1.4 step 6 · Run the daily routine</span><span class="skill">hap-architecture</span>
       </a>
     </div>
 
     <h2>Skills map</h2>
     <div class="grid">
-      <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.1" data-name="Purpose">
+      <a class="node" href="../.github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.1" data-name="Purpose">
         <span class="ref">1.1 · Purpose</span><span class="skill">hap-daily-routine</span>
         <span class="desc">Orchestrates the daily and periodic tiers.</span>
       </a>
-      <a class="node" href=".github/skills/hap-daily-backup/SKILL.md" data-skill="hap-daily-backup" data-section="1.1" data-name="Purpose">
+      <a class="node" href="../.github/skills/hap-daily-backup/SKILL.md" data-skill="hap-daily-backup" data-section="1.1" data-name="Purpose">
         <span class="ref">1.1 · Purpose</span><span class="skill">hap-daily-backup</span>
         <span class="desc">Time Machine start, iCloud PRIVAT copy, backup report.</span>
       </a>
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.1" data-name="Purpose">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.1" data-name="Purpose">
         <span class="ref">1.1 · Purpose</span><span class="skill">hap-architecture</span>
         <span class="desc">Instructions into skills, pages, register, rebuild.</span>
       </a>
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.7" data-step="1" data-name="Keep the home and reports in www">
-        <span class="ref">1.7 step 1 · Keep the home and reports in www</span><span class="skill">hap-architecture</span>
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.7" data-step="1" data-name="Keep the pages and reports in www">
+        <span class="ref">1.7 step 1 · Keep the pages and reports in www</span><span class="skill">hap-architecture</span>
         <span class="desc">Keep navigation and report generation aligned with the web page locations.</span>
       </a>
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.7" data-step="2" data-name="Do not ignore www content">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.7" data-step="2" data-name="Do not ignore www content">
         <span class="ref">1.7 step 2 · Do not ignore www content</span><span class="skill">hap-architecture</span>
         <span class="desc">Keep all web content visible to Git while reviewing it before committing.</span>
       </a>
-      <a class="node" href=".github/skills/hap-maintenance/SKILL.md" data-skill="hap-maintenance" data-section="1.1" data-name="Purpose">
+      <a class="node" href="../.github/skills/hap-maintenance/SKILL.md" data-skill="hap-maintenance" data-section="1.1" data-name="Purpose">
         <span class="ref">1.1 · Purpose</span><span class="skill">hap-maintenance</span>
         <span class="desc">Homebrew, Hermes, Ollama updates and runtime checks.</span>
       </a>
-      <a class="node" href=".github/skills/hap-copilot-standard-check/SKILL.md" data-skill="hap-copilot-standard-check" data-section="1.1" data-name="Purpose">
+      <a class="node" href="../.github/skills/hap-copilot-standard-check/SKILL.md" data-skill="hap-copilot-standard-check" data-section="1.1" data-name="Purpose">
         <span class="ref">1.1 · Purpose</span><span class="skill">hap-copilot-standard-check</span>
         <span class="desc">Read-only check of the Copilot layout standard.</span>
       </a>
-      <a class="node" href=".github/skills/hap-propagate-standard/SKILL.md" data-skill="hap-propagate-standard" data-section="1.1" data-name="Purpose">
+      <a class="node" href="../.github/skills/hap-propagate-standard/SKILL.md" data-skill="hap-propagate-standard" data-section="1.1" data-name="Purpose">
         <span class="ref">1.1 · Purpose</span><span class="skill">hap-propagate-standard</span>
         <span class="desc">Sync shared .github files into BUD, STRM and new projects.</span>
       </a>
-      <a class="node" href=".github/skills/hap-sync-copied-library/SKILL.md" data-skill="hap-sync-copied-library" data-section="1.1" data-name="Purpose">
+      <a class="node" href="../.github/skills/hap-sync-copied-library/SKILL.md" data-skill="hap-sync-copied-library" data-section="1.1" data-name="Purpose">
         <span class="ref">1.1 · Purpose</span><span class="skill">hap-sync-copied-library</span>
         <span class="desc">Repo init, GitHub creation, blocked-push recovery.</span>
       </a>
-      <a class="node" href=".github/skills/hap-restart-chat/SKILL.md" data-skill="hap-restart-chat" data-section="1.1" data-name="Purpose">
+      <a class="node" href="../.github/skills/hap-restart-chat/SKILL.md" data-skill="hap-restart-chat" data-section="1.1" data-name="Purpose">
         <span class="ref">1.1 · Purpose</span><span class="skill">hap-restart-chat</span>
         <span class="desc">Re-anchor a stuck Copilot session.</span>
       </a>
@@ -408,45 +408,49 @@
     <h2>Your requests</h2>
     <p class="lead">Register in <code>hap-architecture</code> 1.5 — each request and the skill step where it lives.</p>
     <div class="grid">
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="1" data-name="Disk cleanup">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="1" data-name="Disk cleanup">
         <span class="ref">1.5 step 1 · Disk cleanup</span>
         <span class="desc">&rarr; hap-daily-routine 1.3.1 step 1</span>
       </a>
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="2" data-name="Daily backup">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="2" data-name="Daily backup">
         <span class="ref">1.5 step 2 · Daily backup</span>
         <span class="desc">&rarr; hap-daily-backup 1.3 steps 1–2, hap-daily-routine 1.3.1 step 2</span>
       </a>
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="3" data-name="Backup status report">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="3" data-name="Backup status report">
         <span class="ref">1.5 step 3 · Backup status report</span>
         <span class="desc">&rarr; hap-daily-backup 1.3 step 3</span>
       </a>
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="4" data-name="Daily git sync">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="4" data-name="Daily git sync">
         <span class="ref">1.5 step 4 · Daily git sync</span>
         <span class="desc">&rarr; hap-daily-routine 1.3.1 step 6 and 1.3.3</span>
       </a>
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="5" data-name="Status home page">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="5" data-name="Status home page">
         <span class="ref">1.5 step 5 · Status home page</span>
         <span class="desc">&rarr; hap-architecture 1.2, 1.3 step 4</span>
       </a>
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="6" data-name="Architecture page">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="6" data-name="Architecture page">
         <span class="ref">1.5 step 6 · Architecture page</span>
         <span class="desc">&rarr; hap-architecture 1.2, 1.3 step 3</span>
       </a>
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="7" data-name="Skills as source of truth">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="7" data-name="Skills as source of truth">
         <span class="ref">1.5 step 7 · Skills as source of truth</span>
         <span class="desc">&rarr; hap-architecture 1.1, 1.3, 1.4</span>
       </a>
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="8" data-name="Web page directory">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="8" data-name="Web page directory">
         <span class="ref">1.5 step 8 · Web page directory</span>
         <span class="desc">&rarr; hap-architecture 1.7 step 1, hap-daily-routine 1.3.1 step 7</span>
       </a>
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="9" data-name="Backup report directory">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="9" data-name="Backup report directory">
         <span class="ref">1.5 step 9 · Backup report directory</span>
         <span class="desc">&rarr; hap-architecture 1.7 step 1, hap-daily-backup 1.3 step 3</span>
       </a>
-      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="10" data-name="Keep web content visible to Git">
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="10" data-name="Keep web content visible to Git">
         <span class="ref">1.5 step 10 · Keep web content visible to Git</span>
         <span class="desc">&rarr; hap-architecture 1.7 step 2, hap-daily-routine 1.3.3 step 2</span>
+      </a>
+      <a class="node" href="../.github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="11" data-name="Architecture page directory">
+        <span class="ref">1.5 step 11 · Architecture page directory</span>
+        <span class="desc">&rarr; hap-architecture 1.7 step 1, src/architecture_refs.py</span>
       </a>
     </div>
   </main>

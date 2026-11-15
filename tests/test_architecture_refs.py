@@ -1,7 +1,10 @@
+import contextlib
+import io
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
@@ -47,9 +50,32 @@ class ArchitectureRefsTest(unittest.TestCase):
 
     def test_real_architecture_page_matches_skills(self):
         errors = architecture_refs.check(
-            ROOT / "architecture.html", ROOT / ".github" / "skills"
+            ROOT / "www" / "architecture.html", ROOT / ".github" / "skills"
         )
         self.assertEqual(errors, [])
+
+    def test_should_check_architecture_in_www(self):
+        with patch.object(architecture_refs, "check", return_value=[]) as check, \
+                contextlib.redirect_stdout(io.StringIO()):
+            result = architecture_refs.main()
+        self.assertEqual(result, 0)
+        check.assert_called_once_with(
+            ROOT / "www" / "architecture.html", ROOT / ".github" / "skills"
+        )
+
+    def test_should_link_each_architecture_reference_to_its_skill(self):
+        page = ROOT / "www" / "architecture.html"
+        refs = architecture_refs.collect_refs(page.read_text(encoding="utf-8"))
+        self.assertTrue(refs)
+        for ref in refs:
+            with self.subTest(skill=ref["data-skill"], href=ref.get("href")):
+                href = ref.get("href", "")
+                self.assertTrue(href)
+                target = (page.parent / href).resolve()
+                self.assertEqual(
+                    target, (ROOT / ".github" / "skills" / ref["data-skill"] / "SKILL.md").resolve()
+                )
+                self.assertTrue(target.is_file())
 
     def test_matching_references_pass(self):
         errors = self.run_check(

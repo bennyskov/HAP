@@ -1,4 +1,4 @@
-"""Check that architecture.html step references match the HAP skill files.
+"""Check that www/architecture.html step references match the HAP skill files.
 
 Each referenced element carries data-skill, data-section, data-step (optional)
 and data-name. The skill heading/step with that number must exist and have the
@@ -113,7 +113,7 @@ def check(page: Path, skills_dir: Path) -> list[str]:
 
 
 def main() -> int:
-    page = ROOT / "architecture.html"
+    page = ROOT / "www" / "architecture.html"
     errors = check(page, ROOT / ".github" / "skills")
     for error in errors:
         print(f"ERROR {error}")

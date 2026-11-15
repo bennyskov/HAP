@@ -55,11 +55,11 @@ python3 -B -m unittest discover -s tests -p 'test_architecture_refs.py' -v
 ## **3.2 Scope**
 
 [test_architecture_refs.py](test_architecture_refs.py) tests
-[architecture_refs.py](../src/architecture_refs.py). One case checks the real
-`architecture.html` against the real skills; the others use temporary skill and
-page fixtures to cover matching references, renamed steps, steps missing from
-the page, unknown steps/sections/skills, section-title mismatches, and ignoring
-numbered lines inside code fences.
+[architecture_refs.py](../src/architecture_refs.py). Cases check the real
+`www/architecture.html` and its skill links, the checker's default page path,
+and temporary skill and page fixtures covering matching references, renamed
+steps, steps missing from the page, unknown steps/sections/skills,
+section-title mismatches, and ignoring numbered lines inside code fences.
 
 # **4. Status Report Path Tests**
 
