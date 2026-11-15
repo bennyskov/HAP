@@ -8,16 +8,16 @@ This document tracks the current state of the `BASE`-level Hermes runtime (macOS
 
 Updated by the `hap-maintenance` skill's "Documentation and Cleanup" step. Reflects the most recent maintenance pass.
 
-- Last updated: 2026-10-11
-- Hermes Agent version: v0.21.6+509.gf925b01 (local `f925b01791fe`, stable update channel; no newer stable update available)
+- Last updated: 2026-11-15
+- Hermes Agent version: v0.23.1 (2026.9.24) (local `3b4215785882`, stable update channel; no newer stable update available)
 - Install method: git, at `~/.hermes/hermes-agent`
-- Python: 3.14.7
-- Config version: v50 (migrated during the 2026-10-10 update)
+- Python: 3.14.10
+- Config version: v50 (migrated during the 2026-10-10 update; not re-reported by `hermes status` since)
 - Active local model: `qwen2.5-coder:7b` (Ollama)
 - Gateway manager: `launchd`
 - Provider connectivity: Ollama reachable at `http://localhost:11434`
-- Ollama: 0.40.3 (Homebrew service, restarted after upgrade)
-- Docker Desktop: 4.94.0, no cask update pending
+- Ollama: 0.40.16 (Homebrew service, restarted after start — service had stopped since the last pass)
+- Docker Desktop: 4.94.0,241994; cask update pending (admin-auth gated; see troubleshooting section 1.8.3 in `hap-maintenance`)
 - Latest maintenance: Homebrew upgraded `ollama` 0.40.2 → 0.40.3 and `sqlite` 3.53.4 → 3.54.0; nothing outdated afterward. Hermes already up to date; cache cleanup and gateway restart completed, with launchd reporting the gateway running. The active model pull succeeded; the read-only Ollama `/api/tags` check returned 200. External provider APIs were not tested.
 - Shell activation: the zsh hook activates the HAP venv on `cd`; no `python`/`python3` aliases override it.
 
