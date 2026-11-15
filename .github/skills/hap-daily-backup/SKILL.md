@@ -53,11 +53,12 @@ python3 -B -m src.daily_backup
    iCloud file reads may require hydration. Files whose content changes while
    both size and modification time are deliberately preserved are not detected.
 3. **Generate the backup dashboard**, including when either backup step fails:
-   `logs/status_report_backup.html`. It shows the generation timestamp, Time
+   `www/status_report_backup.html`. It shows the generation timestamp, Time
    Machine request/live state/latest completed backup, source and destination,
    pending/copied/unchanged counts, copied MiB, skips, and explicit errors.
    It is a snapshot, not a live completion monitor or persisted last-success
-   record. Never interpret "request accepted" as "backup completed".
+   record. Never interpret "request accepted" as "backup completed". The
+   generated report is Git-visible but must never be committed.
 
 Time Machine failure must not prevent the independent file copy or dashboard.
 File copy failure must not prevent the dashboard. A nonzero exit indicates an

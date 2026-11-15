@@ -163,6 +163,25 @@ class TimeMachineTests(unittest.TestCase):
 
 
 class BackupDashboardTests(unittest.TestCase):
+    def test_should_write_default_backup_dashboard_under_www(self) -> None:
+        output = Path(__file__).resolve().parent.parent / "www" / "status_report_backup.html"
+        with (
+            patch("src.daily_backup.sys.platform", "darwin"),
+            patch("src.daily_backup.os.geteuid", return_value=501),
+            patch("src.daily_backup.time_machine", return_value=Section("Time Machine", STATUS_WARN)),
+            patch("src.daily_backup.copy_changed_files", return_value=Section("Files", STATUS_WARN)),
+            patch.object(Path, "mkdir", autospec=True) as mkdir,
+            patch.object(Path, "write_text", autospec=True) as write_text,
+            contextlib.redirect_stdout(io.StringIO()),
+        ):
+            result = main(["--status-only"])
+
+        self.assertEqual(result, 0)
+        mkdir.assert_called_once_with(output.parent, parents=True, exist_ok=True)
+        self.assertEqual(write_text.call_args.args[0], output)
+        self.assertIn("HAP Daily Backup Status", write_text.call_args.args[1])
+        self.assertEqual(write_text.call_args.kwargs, {"encoding": "utf-8"})
+
     def test_should_generate_error_dashboard_and_continue_copy_after_time_machine_failure(self) -> None:
         failure = Section("Time Machine", STATUS_OK)
         failure.add("Manual start", "<denied>", STATUS_ERROR, "Not authorized")

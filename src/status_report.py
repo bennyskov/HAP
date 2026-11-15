@@ -8,7 +8,7 @@ beyond the local commands already used by hap-maintenance).
 Usage:
     python3 src/status_report.py [--output PATH]
 
-Default output: logs/status-report.html (git-ignored, regenerated each run).
+Default output: www/status-report.html (generated, never commit it).
 """
 
 from __future__ import annotations
@@ -30,7 +30,7 @@ import psutil
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PROJECTS_DIR = REPO_ROOT.parent
 TRACKED_REPOS = ["HAP", "BUD", "STRM"]
-DEFAULT_OUTPUT = REPO_ROOT / "logs" / "status-report.html"
+DEFAULT_OUTPUT = REPO_ROOT / "www" / "status-report.html"
 DISK_WARN_PCT = 90
 DISK_ERROR_PCT = 95
 

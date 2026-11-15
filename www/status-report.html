@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>HAP Status Report</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #15181d; color: #e6e6e6; margin: 0; padding: 2rem; }
+h1 { font-size: 1.4rem; margin-bottom: 0.2rem; }
+.meta { color: #9aa4b2; margin-bottom: 1rem; font-size: 0.9rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1rem; }
+.card { background: #1e232b; border-radius: 10px; padding: 1rem 1.25rem; border-left: 5px solid #555; }
+.card.ok { border-left-color: #3fb950; }
+.card.warn { border-left-color: #d29922; }
+.card.error { border-left-color: #f85149; }
+.card h2 { margin: 0 0 0.6rem 0; font-size: 1.05rem; display: flex; justify-content: space-between; align-items: center; }
+.badge { font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 999px; letter-spacing: 0.05em; white-space: nowrap; }
+.badge.ok { background: rgba(63,185,80,0.15); color: #3fb950; }
+.badge.warn { background: rgba(210,153,34,0.15); color: #d29922; }
+.badge.error { background: rgba(248,81,73,0.15); color: #f85149; }
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; table-layout: fixed; }
+td { padding: 0.25rem 0.4rem; vertical-align: top; overflow-wrap: anywhere; }
+td.label { color: #9aa4b2; width: 40%; }
+tr.warn td { background: rgba(210,153,34,0.12); }
+tr.error td { background: rgba(248,81,73,0.15); }
+tr.warn td.label, tr.error td.label { font-weight: 600; }
+tr.warn td.label { color: #d29922; box-shadow: inset 3px 0 0 #d29922; }
+tr.error td.label { color: #f85149; box-shadow: inset 3px 0 0 #f85149; }
+.reason { display: block; font-size: 0.75rem; margin-top: 0.15rem; }
+tr.warn .reason { color: #d29922; }
+tr.error .reason { color: #f85149; }
+.note { color: #9aa4b2; font-size: 0.85rem; font-style: italic; }
+.summary { background: #1e232b; border-radius: 10px; padding: 0.75rem 1.25rem; margin-bottom: 1.25rem; font-size: 0.9rem; }
+.summary h2 { font-size: 0.95rem; margin: 0 0 0.4rem 0; }
+.summary ul { margin: 0; padding-left: 1.2rem; }
+.summary li { margin: 0.2rem 0; }
+.summary li.warn { color: #d29922; }
+.summary li.error { color: #f85149; }
+.summary .ok { color: #3fb950; }
+</style>
+</head>
+<body>
+<h1>HAP Workspace Status</h1>
+<p class="meta">Generated 2026-11-15 17:54:10 on Bennys-Mac-mini.local &middot; overall: <strong>ERROR</strong></p>
+<div class='summary'><h2>What is causing WARN / ERROR</h2><ul><li class='error'>✖ <strong>ERROR</strong> Disk Status → Macintosh HD (Data) (apfs): 95.7% used — 19.9 GB free of 494.4 GB (≥ 95% full)</li><li class='warn'>⚠ <strong>WARN</strong> Git Repos → HAP: main...origin/main — 8 changed file(s) (uncommitted changes)</li><li class='warn'>⚠ <strong>WARN</strong> Git Repos → BUD: main...origin/main — 1 changed file(s) (uncommitted changes)</li></ul></div>
+<div class="grid">
+    <div class="card ok">
+      <h2>OS Status <span class="badge ok">OK</span></h2>
+      <table><tr class='ok'><td class='label'>Hostname</td><td>Bennys-Mac-mini.local</td></tr><tr class='ok'><td class='label'>System</td><td>Darwin 27.3.0</td></tr><tr class='ok'><td class='label'>Machine</td><td>arm64</td></tr><tr class='ok'><td class='label'>macOS version</td><td>27.3</td></tr><tr class='ok'><td class='label'>Uptime</td><td>2:14:43</td></tr><tr class='ok'><td class='label'>Load average (1/5/15m)</td><td>2.78 / 3.38 / 3.77</td></tr><tr class='ok'><td class='label'>Memory used</td><td>64% of 17.2 GB</td></tr></table>
+      
+    </div>
+    <div class="card error">
+      <h2>Disk Status <span class="badge error">ERROR</span></h2>
+      <table><tr class='error'><td class='label'>✖ Macintosh HD (Data) (apfs)</td><td>95.7% used — 19.9 GB free of 494.4 GB<span class='reason'>ERROR: ≥ 95% full</span></td></tr><tr class='ok'><td class='label'>/Volumes/Virtuel Machines (apfs)</td><td>7.5% used — 925.1 GB free of 1000.2 GB</td></tr><tr class='ok'><td class='label'>/Volumes/backup shared (apfs)</td><td>1.9% used — 4023.9 GB free of 5000.9 GB</td></tr><tr class='ok'><td class='label'>/Volumes/backup (apfs)</td><td>89.8% used — 101.6 GB free of 1000.0 GB</td></tr></table>
+      
+    </div>
+    <div class="card ok">
+      <h2>Homebrew <span class="badge ok">OK</span></h2>
+      <table><tr class='ok'><td class='label'>Version</td><td>Homebrew 7.0.13</td></tr><tr class='ok'><td class='label'>Installed formulae</td><td>69</td></tr><tr class='ok'><td class='label'>Installed casks</td><td>3</td></tr><tr class='ok'><td class='label'>Outdated packages</td><td>0 — up to date</td></tr></table>
+      
+    </div>
+    <div class="card ok">
+      <h2>Python / venv <span class="badge ok">OK</span></h2>
+      <table><tr class='ok'><td class='label'>Interpreter</td><td>3.14.10</td></tr><tr class='ok'><td class='label'>Executable</td><td>/Users/bennyskov/Projects/HAP/.venv/bin/python3</td></tr><tr class='ok'><td class='label'>HAP .venv</td><td>present</td></tr><tr class='ok'><td class='label'>BUD .venv</td><td>present</td></tr><tr class='ok'><td class='label'>STRM .venv</td><td>present</td></tr></table>
+      
+    </div>
+    <div class="card ok">
+      <h2>Hermes <span class="badge ok">OK</span></h2>
+      <table><tr class='ok'><td class='label'>Version</td><td>Hermes Agent v0.23.1 (2026.9.24) · stable · local 3b4215785882</td></tr><tr class='ok'><td class='label'>Update status</td><td>up to date</td></tr><tr class='ok'><td class='label'>Model</td><td>qwen2.5-coder:7b</td></tr><tr class='ok'><td class='label'>Provider</td><td>custom</td></tr><tr class='ok'><td class='label'>Gateway</td><td>✓ running</td></tr><tr class='ok'><td class='label'>Jobs</td><td>0</td></tr></table>
+      
+    </div>
+    <div class="card warn">
+      <h2>Git Repos <span class="badge warn">WARN</span></h2>
+      <table><tr class='warn'><td class='label'>⚠ HAP</td><td>main...origin/main — 8 changed file(s)<span class='reason'>WARN: uncommitted changes</span></td></tr><tr class='warn'><td class='label'>⚠ BUD</td><td>main...origin/main — 1 changed file(s)<span class='reason'>WARN: uncommitted changes</span></td></tr><tr class='ok'><td class='label'>STRM</td><td>main...origin/main</td></tr></table>
+      
+    </div></div>
+</body>
+</html>

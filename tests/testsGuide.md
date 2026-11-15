@@ -38,8 +38,8 @@ start Time Machine or copy real iCloud files. Cases cover new/touched/unchanged
 files, size changes with preserved timestamps, non-pruning copies, status-only
 mode, missing sources/unmounted disks, symlink and placeholder handling,
 atomic-copy failures, changing sources, explicit command errors, and dashboard
-generation after a failed backup. The existing workspace dashboard's default
-title and heading remain covered when reusing its renderer.
+generation after a failed backup. The backup dashboard's default output path and
+the existing workspace dashboard's default title and heading are also covered.
 
 # **3. Architecture Reference Tests**
 
@@ -60,3 +60,22 @@ python3 -B -m unittest discover -s tests -p 'test_architecture_refs.py' -v
 page fixtures to cover matching references, renamed steps, steps missing from
 the page, unknown steps/sections/skills, section-title mismatches, and ignoring
 numbered lines inside code fences.
+
+# **4. Status Report Path Tests**
+
+## **4.1 Running**
+
+From the HAP repository root:
+
+```bash
+source .venv/bin/activate
+python3 -B -m unittest discover -s tests -p 'test_status_report.py' -v
+```
+
+## **4.2 Scope**
+
+[test_status_report.py](test_status_report.py) checks the workspace report's
+default and explicit output paths, the home and architecture page links, and
+Git ignore behavior for web content and other paths. System status collection
+is mocked; explicit-output testing uses a temporary directory, and the Git
+ignore test uses hypothetical paths without modifying the real reports.

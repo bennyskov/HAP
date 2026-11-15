@@ -124,10 +124,10 @@
 <body>
   <main>
     <nav class="topnav" aria-label="HAP pages">
-      <a href="index.html">Home</a>
+      <a href="www/index.html">Home</a>
       <a href="architecture.html" aria-current="page">Architecture</a>
-      <a href="logs/status-report.html">Workspace status</a>
-      <a href="logs/status_report_backup.html">Backup status</a>
+      <a href="www/status-report.html">Workspace status</a>
+      <a href="www/status_report_backup.html">Backup status</a>
     </nav>
 
     <div class="eyebrow">HAP workspace</div>
@@ -169,10 +169,10 @@
       <section class="panel">
         <h3>Pages and reports</h3>
         <ul>
-          <li><code>index.html</code> — home</li>
+          <li><code>www/index.html</code> — home</li>
           <li><code>architecture.html</code> — this page</li>
-          <li><code>logs/status-report.html</code> (generated)</li>
-          <li><code>logs/status_report_backup.html</code> (generated)</li>
+          <li><code>www/status-report.html</code> (generated)</li>
+          <li><code>www/status_report_backup.html</code> (generated)</li>
         </ul>
       </section>
       <section class="panel">
@@ -219,14 +219,14 @@
           </a>
           <a class="node" href=".github/skills/hap-daily-backup/SKILL.md" data-skill="hap-daily-backup" data-section="1.3" data-step="3" data-name="Generate the backup dashboard">
             <span class="ref">1.3 step 3 · Generate the backup dashboard</span><span class="skill">hap-daily-backup</span>
-            <span class="desc"><code>logs/status_report_backup.html</code></span>
+            <span class="desc"><code>www/status_report_backup.html</code></span>
           </a>
         </div>
       </div>
       <div class="arrow"></div>
       <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.1" data-step="3" data-name="Git status sweep">
         <span class="ref">1.3.1 step 3 · Git status sweep</span><span class="skill">hap-daily-routine</span>
-        <span class="desc">HAP, BUD, STRM: uncommitted, untracked, ahead/behind.</span>
+        <span class="desc">HAP, BUD, STRM: uncommitted, untracked, ahead/behind; list visible reports separately.</span>
       </a>
       <div class="arrow"></div>
       <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.1" data-step="4" data-name="Standard drift check">
@@ -265,7 +265,7 @@
       <div class="arrow"></div>
       <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.1" data-step="7" data-name="Workspace status dashboard">
         <span class="ref">1.3.1 step 7 · Workspace status dashboard</span><span class="skill">hap-daily-routine</span>
-        <span class="desc"><code>logs/status-report.html</code></span>
+        <span class="desc"><code>www/status-report.html</code></span>
       </a>
       <div class="arrow"></div>
       <a class="node" href=".github/skills/hap-daily-routine/SKILL.md" data-skill="hap-daily-routine" data-section="1.3.1" data-step="8" data-name="Report">
@@ -375,6 +375,14 @@
         <span class="ref">1.1 · Purpose</span><span class="skill">hap-architecture</span>
         <span class="desc">Instructions into skills, pages, register, rebuild.</span>
       </a>
+      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.7" data-step="1" data-name="Keep the home and reports in www">
+        <span class="ref">1.7 step 1 · Keep the home and reports in www</span><span class="skill">hap-architecture</span>
+        <span class="desc">Keep navigation and report generation aligned with the web page locations.</span>
+      </a>
+      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.7" data-step="2" data-name="Do not ignore www content">
+        <span class="ref">1.7 step 2 · Do not ignore www content</span><span class="skill">hap-architecture</span>
+        <span class="desc">Keep all web content visible to Git while reviewing it before committing.</span>
+      </a>
       <a class="node" href=".github/skills/hap-maintenance/SKILL.md" data-skill="hap-maintenance" data-section="1.1" data-name="Purpose">
         <span class="ref">1.1 · Purpose</span><span class="skill">hap-maintenance</span>
         <span class="desc">Homebrew, Hermes, Ollama updates and runtime checks.</span>
@@ -427,6 +435,18 @@
       <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="7" data-name="Skills as source of truth">
         <span class="ref">1.5 step 7 · Skills as source of truth</span>
         <span class="desc">&rarr; hap-architecture 1.1, 1.3, 1.4</span>
+      </a>
+      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="8" data-name="Web page directory">
+        <span class="ref">1.5 step 8 · Web page directory</span>
+        <span class="desc">&rarr; hap-architecture 1.7 step 1, hap-daily-routine 1.3.1 step 7</span>
+      </a>
+      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="9" data-name="Backup report directory">
+        <span class="ref">1.5 step 9 · Backup report directory</span>
+        <span class="desc">&rarr; hap-architecture 1.7 step 1, hap-daily-backup 1.3 step 3</span>
+      </a>
+      <a class="node" href=".github/skills/hap-architecture/SKILL.md" data-skill="hap-architecture" data-section="1.5" data-step="10" data-name="Keep web content visible to Git">
+        <span class="ref">1.5 step 10 · Keep web content visible to Git</span>
+        <span class="desc">&rarr; hap-architecture 1.7 step 2, hap-daily-routine 1.3.3 step 2</span>
       </a>
     </div>
   </main>

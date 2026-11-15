@@ -56,17 +56,20 @@ None of them, individually or combined, cover "is there uncommitted or unpushed 
    immediately after disk cleanup and before the remaining checks. It first
    requests a manual Time Machine backup, then copies new/touched iCloud
    `PRIVAT` files to `/Volumes/backup shared/PRIVAT`, and always generates
-   `logs/status_report_backup.html` when the backup steps fail or succeed.
+   `www/status_report_backup.html` when the backup steps fail or succeed.
    Report its per-section status; a queued/running backup is not completed.
    Continue independent checks after errors, without retrying backup actions.
 
 3. **Git status sweep** — for each repo in **1.1**:
 
    ```bash
-   cd /Users/bennyskov/Projects/<REPO> && git status --short --branch
+   cd /Users/bennyskov/Projects/<REPO> && git status --short --branch --untracked-files=all
    ```
 
-   Flag: uncommitted changes, untracked files outside expected ignore patterns, and `ahead`/`behind` counts versus the remote (if one exists).
+   Flag: uncommitted changes, unexpected untracked files, and `ahead`/`behind`
+   counts versus the remote (if one exists). Content in `www/` is intentionally
+   Git-visible. List the two generated reports separately; their visibility
+   alone must not block sync.
 
 4. **Standard drift check** — run `hap-copilot-standard-check` against HAP. If HAP's shared/templated files changed since the last propagate, also run it against BUD and STRM to see whether they've drifted out of sync. Also run `python3 -B src/architecture_refs.py` to confirm the architecture page still matches the skill steps (see `hap-architecture` 1.3 step 5).
 5. **Runtime check** — run `hap-maintenance check` (read-only: `hermes status`, venv activation, API connectivity). Do not run the `update` flow in the daily tier.
@@ -81,11 +84,13 @@ None of them, individually or combined, cover "is there uncommitted or unpushed 
    python3 /Users/bennyskov/Projects/HAP/src/status_report.py
    ```
 
-   This writes `logs/status-report.html` (git-ignored; see `hap-maintenance` section 1.6.4). Do not skip this step, even when the other checks find nothing. If the script fails, report the failure as a finding.
+   This writes `www/status-report.html` (generated; never commit it; see
+   `hap-maintenance` section 1.6.4). Do not skip this step, even when the other
+   checks find nothing. If the script fails, report the failure as a finding.
 8. **Report** — a short pass/fail summary per repo and per check, including
    commits and pushes, cleanup and backup results, both dashboard paths and
    their per-section OK/WARN/ERROR summaries. Both reports are linked from the
-   home page `index.html`.
+   home page `www/index.html`.
 
 ### **1.3.2 Periodic tier (heavier, run weekly or before a significant work session)**
 
@@ -93,7 +98,7 @@ None of them, individually or combined, cover "is there uncommitted or unpushed 
 2. **Standard propagation** — if step 1's standard check (or the daily tier's) found drift between HAP and a subproject, run `hap-propagate-standard` to sync the shared/templated files into the affected subproject(s).
 3. **Periodic git sync** — if periodic actions produced new changes or local commits, sync the affected
    repos using the same safety checks and commit attribution in **1.3.3**.
-4. **Git status recheck** — re-run the daily tier's git status sweep to confirm every repo is clean and up to date with its remote.
+4. **Git status recheck** — re-run the daily tier's git status sweep to confirm each repo is up to date with its remote and report any intentionally unstaged dashboards separately.
 5. **Dashboard refresh** — regenerate the workspace status dashboard (daily tier step 7) so it shows the state after the periodic actions. Refresh the backup dashboard with `hap-daily-backup`'s status-only mode if a current Time Machine snapshot is needed; do not start a second backup pass.
 
 ### **1.3.3 Safe git sync**
@@ -107,10 +112,14 @@ Apply these steps separately to HAP, BUD, and STRM:
    tracking branch. If behind or diverged, stop for that repo; do not pull,
    merge, rebase, force-push, or rewrite history automatically.
 2. **Review candidates** — before staging or pushing, review the candidate paths and changes, including
-   already-staged changes and commits pending push. Never include secrets,
-   credentials, private data, generated or protected content, or other ignored
-   paths. Do not read excluded files to inspect their contents. If a candidate
-   is unsafe, cannot be reviewed safely, or its eligibility is uncertain, block
+   already-staged changes and commits pending push. For HAP, the generated
+   dashboards `www/status-report.html` and `www/status_report_backup.html`
+   are not commit candidates: report their untracked or unstaged changes and
+   leave them untouched. If either is staged or included in a commit pending
+   push, block HAP's sync and report it. Never include secrets, credentials,
+   private data, other generated or protected content, or ignored paths. Do not
+   read excluded files to inspect their contents. If any other candidate is
+   unsafe, cannot be reviewed safely, or its eligibility is uncertain, block
    the whole repo and report why; do not silently omit it or push existing
    commits from that repo. Preserve existing staged changes.
 3. **Stage and commit** — stage only the individually reviewed eligible paths, including tracked
@@ -165,10 +174,10 @@ Return a short routine report:
 
 - Tier run (daily / periodic).
 - Disk cleanup result (eligible/deleted files, allocated MiB, skipped entries, errors).
-- Backup result and path to `logs/status_report_backup.html`, including Time Machine's request/current state and file-copy counts.
+- Backup result and path to `www/status_report_backup.html`, including Time Machine's request/current state and file-copy counts.
 - Per-repo git status (clean / dirty / ahead / behind / no remote).
 - Per-repo commit identifier, push result, and blocked or skipped sync reason.
 - Standard drift findings, if any, and whether they were propagated.
 - Runtime/software check results, if the periodic tier ran.
-- Path to the regenerated HTML status dashboard (`logs/status-report.html`) and its per-section summary.
+- Path to the regenerated HTML status dashboard (`www/status-report.html`) and its per-section summary.
 - Any blocked or deferred step (auth-gated upgrade, missing remote, secret-scanning block) and what it needs next.

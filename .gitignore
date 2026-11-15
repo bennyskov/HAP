@@ -264,3 +264,7 @@ __marimo__/
 
 # Secrets - never commit
 config/KEYS.md
+
+# Keep web content visible to Git; review it before committing.
+!/www/
+!/www/**

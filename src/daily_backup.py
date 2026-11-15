@@ -2,6 +2,7 @@
 
 Run from HAP: python3 -B -m src.daily_backup
 Use --status-only to generate a dashboard without starting or copying backups.
+Default output: www/status_report_backup.html (generated, never commit it).
 """
 
 from __future__ import annotations
@@ -22,7 +23,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_SOURCE = Path.home() / "Library" / "Mobile Documents" / "com~apple~CloudDocs" / "PRIVAT"
 BACKUP_VOLUME = Path("/Volumes/backup shared")
 DEFAULT_DESTINATION = BACKUP_VOLUME / "PRIVAT"
-DEFAULT_OUTPUT = REPO_ROOT / "logs" / "status_report_backup.html"
+DEFAULT_OUTPUT = REPO_ROOT / "www" / "status_report_backup.html"
 
 
 def _tmutil(*arguments: str) -> str:
