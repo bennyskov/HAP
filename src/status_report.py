@@ -394,7 +394,9 @@ def render_summary(sections: list[Section]) -> str:
     return f"<div class='summary'><h2>What is causing WARN / ERROR</h2><ul>{lis}</ul></div>"
 
 
-def render_html(sections: list[Section]) -> str:
+def render_html(
+    sections: list[Section], *, title: str = "HAP Status Report", heading: str = "HAP Workspace Status"
+) -> str:
     generated = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     cards = "".join(render_card(s) for s in sections)
     overall = worst(*(s.status for s in sections))
@@ -402,11 +404,11 @@ def render_html(sections: list[Section]) -> str:
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>HAP Status Report</title>
+<title>{html.escape(title)}</title>
 <style>{CSS}</style>
 </head>
 <body>
-<h1>HAP Workspace Status</h1>
+<h1>{html.escape(heading)}</h1>
 <p class="meta">Generated {generated} on {socket.gethostname()} &middot; overall: <strong>{STATUS_LABEL[overall]}</strong></p>
 {render_summary(sections)}
 <div class="grid">{cards}</div>

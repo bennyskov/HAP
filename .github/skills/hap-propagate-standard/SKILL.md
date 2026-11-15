@@ -77,6 +77,7 @@ These describe the project's own mission and must not be overwritten by a sync:
 6. Leave `.github/skills/` empty until project-specific workflows exist, or move skills in from HAP only once their referenced scripts/config actually live in the subproject (do not move a skill file ahead of the code/config it documents — that creates a scaffold that points at the wrong repo).
 7. Run `hap-copilot-standard-check` inside the new subproject to confirm the scaffold is upheld.
 8. If the repo isn't initialized in git yet, use the `hap-sync-copied-library` skill to init and push it.
+9. Register the new project: add it to the repo list in `hap-daily-routine` 1.1 and `TRACKED_REPOS` in `src/status_report.py`, then follow the `hap-architecture` capture flow so the architecture page and requirements register show it.
 
 ## **1.5 Versioning note**
 

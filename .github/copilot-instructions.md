@@ -4,6 +4,10 @@ applyTo: "**/*"
 
 # **1. Copilot Instructions for HAP**
 
+## **1.0 Security settings**
+- In the first response of each new chat, after reading these instructions, show the following short reminder once, then continue with the user's request:
+> Workspace instructions loaded. To configure this chat, select **Agent** in the agent picker, **Auto** in the model picker, and your preferred mode in the **Permissions** picker: **Autopilot** for autonomous work or **Bypass Approvals / Allow All** if your version offers it. Or use `/autopilot on`, `/allow-all on`, `/permissionsallow-all`.
+
 ## **1.1 Mission**
 
 This repository is the HAP workspace for Hermes tooling, runtime maintenance, and project-level conventions in VS Code. Keep all work aligned with the active project structure and the current repo guidance.
@@ -41,6 +45,7 @@ Use this structure for project guidance:
 - Prefer concise, concrete guidance over long speculation.
 - Use the active repo docs as the canonical source of intent.
 - Read [`.github/instructions/copilot-standard.instructions.md`](/Users/bennyskov/Projects/HAP/.github/instructions/copilot-standard.instructions.md) when you need the HAP Copilot layout standard in one place.
+- Capture every durable user instruction in the owning skill and in the requirements register, following the `hap-architecture` skill's capture flow, so HAP and its subprojects can always be reestablished from the skills.
 
 ## **1.6 Coding expectations**
 

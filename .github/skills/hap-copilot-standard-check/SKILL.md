@@ -41,6 +41,7 @@ Re-read the latest current files before giving a verdict:
 ## **1.5 What to Verify**
 
 - file type matches its role
+- durable user instructions are captured in skills and in the `hap-architecture` requirements register, and `python3 -B src/architecture_refs.py` passes
 - instructions live in the right scoped file
 - docs stay short, current, and readable
 - skills are reusable and action-oriented

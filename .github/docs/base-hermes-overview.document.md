@@ -17,7 +17,7 @@ Updated by the `hap-maintenance` skill's "Documentation and Cleanup" step. Refle
 - Gateway manager: `launchd`
 - Provider connectivity: Ollama reachable at `http://localhost:11434`
 - Ollama: 0.40.16 (Homebrew service, restarted after start — service had stopped since the last pass)
-- Docker Desktop: 4.94.0,241994; cask update pending (admin-auth gated; see troubleshooting section 1.8.3 in `hap-maintenance`)
+- Docker Desktop: 4.99.0,245822; no cask update pending (user completed the admin-auth gated upgrade manually on 2026-11-15)
 - Latest maintenance: Homebrew upgraded `ollama` 0.40.2 → 0.40.3 and `sqlite` 3.53.4 → 3.54.0; nothing outdated afterward. Hermes already up to date; cache cleanup and gateway restart completed, with launchd reporting the gateway running. The active model pull succeeded; the read-only Ollama `/api/tags` check returned 200. External provider APIs were not tested.
 - Shell activation: the zsh hook activates the HAP venv on `cd`; no `python`/`python3` aliases override it.
 
