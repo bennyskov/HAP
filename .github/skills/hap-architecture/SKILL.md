@@ -111,6 +111,15 @@ User requests, newest last, with where each one is captured:
 11. **Architecture page directory** — 2026-11-15: move the architecture page
     into `www/` and update its links and reference checker. Captured in this
     skill, 1.7 step 1, and `src/architecture_refs.py`.
+12. **Remove legacy prompts directory** — 2026-11-16: remove `.github/prompts/`
+    and keep reusable workflows in skills. Captured in this skill, 1.8 step 1,
+    and `.github/instructions/copilot-standard.instructions.md` 1.4.5.
+13. **Archive backup shared** — 2026-11-16: create dated ZIP archives of the
+    backup shared volume, excluding top-level dot files, and retain the latest
+    five on Virtuel Machines. Captured in `hap-daily-backup` 1.3 step 4.
+14. **Make PRIVAT files iCloud-only** — 2026-11-16: after the backup, remove
+    local downloads of eligible iCloud `PRIVAT` files while retaining cloud and
+    external backup copies. Captured in `hap-daily-backup` 1.3 step 5.
 
 ## **1.6 Guardrails**
 
@@ -135,3 +144,9 @@ User requests, newest last, with where each one is captured:
 2. **Do not ignore www content** — keep all `www/` paths visible to Git,
    including nested paths matching general ignore rules. Review content before
    committing and never commit secrets or generated reports.
+
+## **1.8 Copilot workflow layout**
+
+1. **Keep reusable workflows in skills** — omit `.github/prompts/` from the HAP
+   layout. Migrate any needed legacy prompt workflows into `.github/skills/`
+   rather than recreating the directory.

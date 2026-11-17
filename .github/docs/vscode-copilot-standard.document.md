@@ -16,7 +16,6 @@ Use these as the main standard references:
 - [copilot-security.instructions.md](/Users/bennyskov/Projects/HAP/.github/instructions/copilot-security.instructions.md)
 - [copilot-testings.instructions.md](/Users/bennyskov/Projects/HAP/.github/instructions/copilot-testings.instructions.md)
 - [agents/](/Users/bennyskov/Projects/HAP/.github/agents)
-- [prompts/](/Users/bennyskov/Projects/HAP/.github/prompts) for legacy compatibility only; prefer skills for reusable workflows
 - [skills/](/Users/bennyskov/Projects/HAP/.github/skills)
 
 ## **1.3 Essentials**
@@ -33,8 +32,8 @@ Use these as the main standard references:
 - The file type matches the task.
 - Instructions are current and easy to follow.
 - Skills are reusable and action-oriented.
-- Skills are preferred over prompt files for new reusable workflows.
-- Agents and any retained legacy prompts are clearly scoped.
+- Reusable workflows live in skills.
+- Agents are clearly scoped.
 - No stale references point to archived or ignored content.
 
 ## **1.5 Rule of thumb**

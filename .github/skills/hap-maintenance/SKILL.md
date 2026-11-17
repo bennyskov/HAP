@@ -20,7 +20,7 @@ Use this skill for repeatable maintenance of the HAP development workspace on ma
 - Reviewing whether shared files, names, and conventions are aligned across projects.
 - Creating or refining reusable framework helpers, templates, or definitions.
 - Standardizing how projects organize config, docs, scripts, and shared assets.
-- Auditing framework-level docs, legacy prompts, or skills for consistency.
+- Auditing framework-level docs, agents, or skills for consistency.
 - Updating maintenance documentation after performing tasks.
 
 ## **1.4 Prerequisites**
@@ -71,9 +71,9 @@ Every invocation mode ends by (re)generating the HTML status dashboard (section 
 - **Identify Asset**: Pinpoint the framework asset, pattern, or convention to review.
 - **Check Scope**: Confirm if it's shared across multiple projects or local to one.
 - **Verify Consistency**: Check if naming, placement, and responsibility align with `HAP` standards.
-- **Review Dependencies**: Ensure related docs, legacy prompts, and skills reference the current structure.
+- **Review Dependencies**: Ensure related docs, agents, and skills reference the current structure.
 - **Standardize**: Refactor duplicated logic or inconsistent patterns into a shared, standardized form.
-- **Check Copilot Standard**: Run the `hap-copilot-standard-check` skill to verify the documented HAP Copilot layout is still upheld and still matches the current upstream VS Code customization spec (instructions, skills, custom agents, legacy prompts, and legacy chat modes). Flag stale file names, missing files, and outdated format references; fix them if confirmed.
+- **Check Copilot Standard**: Run the `hap-copilot-standard-check` skill to verify the documented HAP Copilot layout is still upheld and still matches the current upstream VS Code customization spec (instructions, skills, custom agents, and legacy chat modes). Flag stale file names, missing files, and outdated format references; fix them if confirmed.
 
 ### **1.6.3 Documentation and Cleanup**
 - **Sync API Keys**: If keys changed, update `config/KEYS.md` to match `~/.config/hermes/env.zsh`. Never commit this file — it must stay in `.gitignore`.

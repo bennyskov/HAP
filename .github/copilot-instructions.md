@@ -28,9 +28,10 @@ Use this structure for project guidance:
 - `.github/instructions/*.instructions.md` — scoped rules for tasks and file types
 - `.github/instructions/copilot-standard.instructions.md` — standard Copilot layout and conventions
 - `.github/agents/*.agent.md` — reusable custom agents
-- `.github/prompts/*.prompt.md` — legacy prompt files retained only when compatibility requires them; prefer skills for reusable workflows
 - `.github/skills/*/SKILL.md` — reusable workflows and operating procedures
 - `.github/docs/*.document.md` — project documents and reference material
+
+Do not recreate the retired `.github/prompts/` directory; migrate needed legacy workflows into skills.
 
 ## **1.4 Scope boundaries**
 
@@ -57,7 +58,6 @@ Use this structure for project guidance:
 ## **1.7 Naming conventions**
 
 - Instruction files: `*.instructions.md`
-- Legacy prompt files: `*.prompt.md`; do not create new ones when a skill can provide the workflow
 - Custom agent files: `*.agent.md`
 - Skill directories: `name/SKILL.md`
 - Project docs: `*.document.md`

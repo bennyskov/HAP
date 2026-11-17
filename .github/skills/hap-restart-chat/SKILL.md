@@ -58,9 +58,8 @@ Also review the currently active file if the user already has one open and it is
    - `.github/agents/`
    - `.github/docs/`
    - `.github/instructions/`
-   - `.github/prompts/` when legacy prompt files are present
    - `.github/skills/`
-4. Check whether key referenced files still exist and note any stale references. If drift is found (missing files, renamed conventions, outdated format references), do not attempt a full audit here — recommend running the `hap-copilot-standard-check` skill for a deeper pass, and note the recommendation in the output.
+4. Check whether key referenced files still exist, the retired `.github/prompts/` directory is absent, and note any stale references. If drift is found (missing files, renamed conventions, outdated format references), do not attempt a full audit here — recommend running the `hap-copilot-standard-check` skill for a deeper pass, and note the recommendation in the output.
 5. Re-state the current working baseline briefly:
    - what the workspace is for
    - which docs define scope

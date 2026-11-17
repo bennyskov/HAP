@@ -45,7 +45,6 @@ Do not treat the following as project inputs unless explicitly requested:
 - `.github/instructions/`
 - `.github/docs/`
 - `.github/skills/`
-- `.github/prompts/` for legacy prompt compatibility only; prefer `.github/skills/` for reusable workflows
 - `.github/instructions/copilot-standard.instructions.md` for the compact HAP layout standard
 - `.github/docs/hap-objective.document.md` as the primary project objective file
 

@@ -11,7 +11,7 @@ Use this skill to check whether the current HAP Copilot standard is up to date a
 
 ## **1.2 Use When**
 
-- reviewing Copilot instructions, docs, agents, prompts, or skills
+- reviewing Copilot instructions, docs, agents, or skills
 - checking for drift after edits
 - validating that a new file belongs in the right Copilot location
 - confirming whether the current standard is upheld
@@ -23,7 +23,6 @@ Re-read the latest current files before giving a verdict:
 - `.github/copilot-instructions.md`
 - `.github/instructions/*.instructions.md`
 - `.github/agents/*.agent.md`
-- legacy `.github/prompts/*.prompt.md` files when present
 - `.github/skills/*/SKILL.md`
 - `.github/docs/*.document.md`
 - `.github/instructions/copilot-standard.instructions.md`
@@ -42,6 +41,7 @@ Re-read the latest current files before giving a verdict:
 
 - file type matches its role
 - durable user instructions are captured in skills and in the `hap-architecture` requirements register, and `python3 -B src/architecture_refs.py` passes
+- the retired `.github/prompts/` directory is absent and reusable workflows live in skills
 - instructions live in the right scoped file
 - docs stay short, current, and readable
 - skills are reusable and action-oriented

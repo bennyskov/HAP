@@ -16,14 +16,12 @@ When creating or updating AI guidance, use this structure:
 - `.github/copilot-instructions.md` — repo-wide baseline
 - `.github/instructions/*.instructions.md` — scoped instruction files
 - `.github/agents/*.agent.md` — reusable custom agents
-- `.github/prompts/*.prompt.md` — legacy prompt files retained only when compatibility requires them
 - `.github/skills/*/SKILL.md` — reusable workflows and operating procedures
 - `.github/docs/*.document.md` — project documents and standards
 
 ## **1.3 Naming conventions**
 
 - Instruction files use the `*.instructions.md` suffix.
-- Legacy prompt files use the `*.prompt.md` suffix.
 - Custom agent files use the `*.agent.md` suffix.
 - Skill folders use a short descriptive name with a `SKILL.md` file inside.
 - Project documents use the `*.document.md` suffix when they define repo rules or objectives.
@@ -42,8 +40,8 @@ Use `.github/agents/*.agent.md` for reusable AI personas such as maintenance, re
 ### **1.4.4 Skills**
 Use `.github/skills/*/SKILL.md` when the task is a multi-step operating procedure that should be reusable and packaged clearly.
 
-### **1.4.5 Legacy prompts**
-Do not create new `.github/prompts/*.prompt.md` files when a skill can provide the workflow. Prompt files are deprecated for Agent Host sessions and should be migrated to skills when encountered.
+### **1.4.5 Retired prompts directory**
+The `.github/prompts/` directory is retired in HAP. Do not recreate it; migrate needed legacy workflows into `.github/skills/`.
 
 ## **1.5 Safety and scope rules**
 

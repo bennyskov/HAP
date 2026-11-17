@@ -40,6 +40,13 @@ mode, missing sources/unmounted disks, symlink and placeholder handling,
 atomic-copy failures, changing sources, explicit command errors, and dashboard
 generation after a failed backup. The backup dashboard's default output path and
 the existing workspace dashboard's default title and heading are also covered.
+ZIP tests cover top-level dot-file exclusion, nested hidden entries, empty
+folders, old timestamps, five-archive retention, symlink preservation, special
+file failures, unmounted volumes, and command failure reporting.
+The iCloud-only step uses mocked iCloud operations and temporary files to check
+backup verification, unsafe or changed files, failure gating, and status-only
+behavior. A macOS helper test checks that ordinary local files are never evicted;
+tests never evict real iCloud files.
 
 # **3. Architecture Reference Tests**
 
