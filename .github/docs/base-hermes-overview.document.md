@@ -8,17 +8,17 @@ This document tracks the current state of the `BASE`-level Hermes runtime (macOS
 
 Updated by the `hap-maintenance` skill's "Documentation and Cleanup" step. Reflects the most recent maintenance pass.
 
-- Last updated: 2026-11-15
-- Hermes Agent version: v0.23.1 (2026.9.24) (local `3b4215785882`, stable update channel; no newer stable update available)
+- Last updated: 2026-11-25
+- Hermes Agent version: v0.23.4 (2026.9.24) (local `8fc037444731`, stable update channel; no newer stable update available)
 - Install method: git, at `~/.hermes/hermes-agent`
-- Python: 3.14.10
+- Python: 3.14.9
 - Config version: v50 (migrated during the 2026-10-10 update; not re-reported by `hermes status` since)
 - Active local model: `qwen2.5-coder:7b` (Ollama)
 - Gateway manager: `launchd`
-- Provider connectivity: Ollama reachable at `http://localhost:11434`
-- Ollama: 0.40.16 (Homebrew service, restarted after start — service had stopped since the last pass)
-- Docker Desktop: 4.99.0,245822; no cask update pending (user completed the admin-auth gated upgrade manually on 2026-11-15)
-- Latest maintenance: Homebrew upgraded `ollama` 0.40.2 → 0.40.3 and `sqlite` 3.53.4 → 3.54.0; nothing outdated afterward. Hermes already up to date; cache cleanup and gateway restart completed, with launchd reporting the gateway running. The active model pull succeeded; the read-only Ollama `/api/tags` check returned 200. External provider APIs were not tested.
+- Provider connectivity: Ollama `/api/tags` reachable at `http://localhost:11434`; external provider APIs were not tested.
+- Ollama: 0.40.18 (Homebrew service started after it was found stopped)
+- Docker Desktop: 4.99.0,245822; no cask update pending.
+- Latest maintenance: Homebrew upgraded `ffmpeg`, `simdutf`, `merve`, `simdjson`, `ada-url`, `node`, `ollama`, `virtualenv`, and `ripgrep`; its outdated check found no pending packages among trusted taps. Homebrew warned that the untrusted `steipete/tap` is excluded from that check. Hermes upgraded from v0.23.3 to v0.23.4; its updater reported two old, unrestored update autostashes and a pending `homeassistant` plugin update. Cache cleanup removed bytecode, but two empty-directory removals raced with newly created files. The gateway is running, and the active model pull succeeded.
 - Shell activation: the zsh hook activates the HAP venv on `cd`; no `python`/`python3` aliases override it.
 
 ## **1.3 Key Commands**
