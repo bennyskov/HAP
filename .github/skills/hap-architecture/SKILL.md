@@ -120,6 +120,20 @@ User requests, newest last, with where each one is captured:
 14. **Make PRIVAT files iCloud-only** — 2026-11-16: after the backup, remove
     local downloads of eligible iCloud `PRIVAT` files while retaining cloud and
     external backup copies. Captured in `hap-daily-backup` 1.3 step 5.
+15. **Use built-in OpenSSH for SFTP** — 2026-11-24: replace the Python SFTP
+    server workflow with the built-in macOS OpenSSH service. Captured in
+    `hap-openssh-sftp-server` 1.3 steps 1–6.
+16. **Make OpenSSH setup stepwise** — 2026-11-24: keep the SFTP workflow
+    concise, executable one step at a time, and paused for user actions and
+    approvals. Captured in `hap-openssh-sftp-server` 1.2 and 1.3.
+17. **Restore SFTP network documentation** — 2026-11-24: retain the requested
+    hosts-file aliases and document the router forwarding rule as already
+    configured by the user, with external verification still required.
+    Captured in `hap-openssh-sftp-server` 1.4 step 1 and 1.3 step 6.
+18. **Document Windows SFTP transfers** — 2026-11-24: record the confirmed
+    Windows key-based LAN connection, safe `authorized_keys` editing, optional
+    Windows hosts-file setup, and recursive `put -R` usage. Captured in
+    `hap-openssh-sftp-server` 1.3 steps 4–5, 1.4 step 1, and 1.5 steps 1–2.
 
 ## **1.6 Guardrails**
 
